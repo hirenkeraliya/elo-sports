@@ -1,13 +1,11 @@
 {{-- Page Name:admin sidebar menu
 Developed on :2023/03/24
 Updated on :2023/03/24
-Objective : this page will lists all the amdin users 
+Objective : this page will lists all the amdin users
 --}}
 <aside class="main-sidebar  elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('dashboard')}}" class="brand-link" style="border-bottom: 1px solid #f7c646;">
-      {{-- <img src="{{asset('bower_components/admin-lte/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Elo Sports</span> --}}
       Elo Sports
     </a>
 
@@ -47,7 +45,7 @@ Objective : this page will lists all the amdin users
               {{-- <i class="far fa-circle nav-icon"></i> --}}
               {{-- <i class="nav-icon fas fa-tachometer-alt"></i> --}}
               <p>
-                Livestreams 
+                Livestreams
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -73,7 +71,7 @@ Objective : this page will lists all the amdin users
             <a href="#" class="nav-link ">
 
               <p>
-                User Account Setting 
+                User Account Setting
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -121,7 +119,7 @@ Objective : this page will lists all the amdin users
                 Setting
               </p>
             </a>
-         
+
           </li>
 			    @endif
 			 @if(auth()->user()->can('view-betting-master'))
@@ -130,7 +128,7 @@ Objective : this page will lists all the amdin users
               {{-- <i class="far fa-circle nav-icon"></i> --}}
               {{-- <i class="nav-icon fas fa-tachometer-alt"></i> --}}
               <p>
-                Betting Amount Master 
+                Betting Amount Master
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -153,8 +151,8 @@ Objective : this page will lists all the amdin users
               @endif
             </ul>
           </li>
-          
-		
+
+
 
      @endif
     @if(auth()->user()->can('view-betting-view-master'))
@@ -163,7 +161,7 @@ Objective : this page will lists all the amdin users
               {{-- <i class="far fa-circle nav-icon"></i> --}}
               {{-- <i class="nav-icon fas fa-tachometer-alt"></i> --}}
               <p>
-                Betting View Master 
+                Betting View Master
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -213,12 +211,12 @@ Objective : this page will lists all the amdin users
                     <p>Twitch Report </p>
                 </a>
               </li>
-              @endif 
+              @endif
             </ul>
           </li>
           @endif
         </ul>
-    
+
       </nav>
       <!-- /.sidebar-menu -->
     </div>

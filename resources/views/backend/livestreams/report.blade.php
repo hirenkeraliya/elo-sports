@@ -7,9 +7,6 @@ when the page first load it will show today reports i when date rage is selected
 @extends('layout.admin.layout')
 @section('title', 'Livestream Report')
 @section('css')
-<link rel="stylesheet" href="../../bower_components/bootstrap-daterangepicker/daterangepicker.css">
-
-<link rel="stylesheet" href="../../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 <style>
     table .dropdown {
         background: #f49e3f;
@@ -127,7 +124,7 @@ when the page first load it will show today reports i when date rage is selected
                                             </div>
                                         </div>
                                     </div>
-                                   
+
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -156,7 +153,7 @@ when the page first load it will show today reports i when date rage is selected
                                                      <td>{{ round($user->streams->sum('bets_sum_vig_amount')) }}</td>
                                                     <td>{{ round(($user->streams->sum('bets_sum_vig_amount')*$setting->streamer_per)/100)}}</td>
                                                     <td>{{ round(($user->streams->sum('bets_sum_vig_amount') -  ($user->streams->sum('bets_sum_vig_amount')*$setting->streamer_per)/100))}}</td>
-                                                    
+
 
                                                     </tr>
 
@@ -255,7 +252,7 @@ $('#reservation').daterangepicker()
 $('#reservation').on('apply.daterangepicker', function(ev, picker) {
     console.log(picker.startDate.format('yyyy-mm-dd H:i:s'),picker.endDate.format('MMMM D, YYYY'));
     var date = {
-                    
+
                   start_date: picker.startDate.subtract(1,'days').format('MMMM D, YYYY')
                     , end_date: picker.endDate.add(1,'days').format('MMMM D, YYYY')
 
@@ -263,19 +260,19 @@ $('#reservation').on('apply.daterangepicker', function(ev, picker) {
       var url =baseUrl+'/streaming-report/?start_date='+picker.startDate.format('MMMM D, YYYY')+'&end_date='+picker.endDate.format('MMMM D, YYYY');
       $('#data-tables').DataTable().destroy();
      load_data(url);
-        
-    
+
+
 });
 
        $( window ).on( "load",function(){
          var url =baseUrl+'/streaming-report/';
          load_data(url);
    })
-       
 
-      
 
-      
+
+
+
     })
 
      function load_data(url){
@@ -319,11 +316,11 @@ $('#reservation').on('apply.daterangepicker', function(ev, picker) {
                         data:'profit',
                         name:'profit'
                     }
-                    
+
 
                 ]
             });
-        } 
+        }
 
 </script>
 
