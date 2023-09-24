@@ -107,7 +107,7 @@
 						</div>
 						<ul class="navbar-nav">
 							<li class="nav-item active">
-								<a class="nav-link" href="index.php">Home</a>
+								<a class="nav-link" href="/">Home</a>
 							</li>
 
 							@if (auth()->check() && count(auth()->user()->roles) > 0)
