@@ -1,5 +1,5 @@
-<!-- This page shows   Stream   list created by user  -->
 @extends('master')
+
 @section('content')
 <div class="page-wrapper">
     <div class="page-content">
