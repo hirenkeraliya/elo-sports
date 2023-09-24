@@ -4,422 +4,464 @@
   -->
 @extends('master')
 
-@section('css')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-@endsection
-
-
 @section('content')
-    <div id="app" class="container">
-        @if($livestream->status != 'stopped')
-            <chat :user_details="{{ auth()->user() }}" :livestm="{{$livestream}}"></chat>
-        @endif
-    </div>
+<div id="app" class="container">
+    @if ($livestream->status != 'stopped')
+        <chat :user_details="{{ auth()->user() }}" :livestm="{{ $livestream }}"></chat>
+    @endif
+</div>
 
-    @if(isset($livestream))
-        @if(($livestream->status == "started")||($livestream->status == "created"))
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="video">
-                        <h3 class="text-light">{{ $livestream->name }}</h3>
-                    </div>
-                    <br>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <video id="player" class="video-js" controls autoplay preload="auto" width="1280" height="720" data-setup="{}">
-                                <source src=" {{ env('RMPT_STREAMING_LINK').'/'.$livestream->stream_id }}.m3u8" type="application/x-mpegURL" res="9999" label="auto" />
-                                <p class="vjs-no-js">To view this video please enable JavaScript, and consider
-                                    upgrading to
-                                    a web
-                                    browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports
-                                        HTML5
-                                        video</a></p>
-                            </video>
+<div class="page-wrapper">
+    <div class="page-content">
+        <section class="py-0 py-lg-5">
+            <div class="container">
+                <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0" style="background-color:black;">
+                    <div class="row row-cols-1 row-cols-lg-1 row-cols-xl-2" >
+                        <div class="col mx-auto">
+                            <i class="bx bx-play" style="font-size:50px;"></i>
                         </div>
                     </div>
+                    <!--end row-->
                 </div>
             </div>
+        </section>
 
-            <div class="row">
-                <div class="col-md-12 mb-5">
-                    <div class="col-md-12">
-                        <div class="col-md-12">
-                            <p class="text-light stream">Stream Stats</p>
+        @if (isset($livestream))
+            @if ($livestream->status == "started" || $livestream->status == "created")
+                <section class="pt-md-5 pt-sm-3 ">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="text-light stream">Stream Stats</p>
 
-                            <ul >
-                                @if(isset($game_name))
-                                <li class="text-light">{{$game_name}}</li>
-                                @endif
-                                <li class="text-light">Viewer Count: {{$livestream->viewer()->count()}}</li>
-                            </ul>
+                                        <ul>
+                                            <li class="text-light">Title: {{ $livestream->name }}</li>
 
-                            {{-- </div> --}}
+                                            @if (isset($game_name))
+                                                <li class="text-light">
+                                                    Game Name: {{ $game_name }}
+                                                </li>
+                                            @endif
 
+                                            <li class="text-light">Viewer Count: {{ $livestream->viewer()->count() }}</li>
+                                        </ul>
 
-                        {{-- <div class="col-md-4"> --}}
-                        @if(isset($player_stats['data']))
-                            <p class="text-light">Player Stats</p>
-                            <ul>
-                                <li><img src="{{$player_stats['data']['platformInfo']['avatarUrl']}}"></li>
+                                        <p class="text-light">
+                                            @if (isset($player_stats['data']))
+                                                <p class="text-light">Player Stats</p>
 
-                                @if($game_name=="CSGO")
-                                <li class="text-light">
-                                    Kills: {{$player_stats['data']['segments'][0]['stats']['kills']['value']}}
-                                <li class="text-light">
-                                    Deaths: {{$player_stats['data']['segments'][0]['stats']['deaths']['value']}}</li>
-                                <li class="text-light">Kill Death
-                                    Ratio: {{$player_stats['data']['segments'][0]['stats']['kd']['value']}}</li>
-                                @elseif($game_name=="Apex Legends")
-                                <li>Rank: {{$player_stats['data']['segments'][0]['stats']['level']['value']}}</li>
-                                <li>Kills: {{$player_stats['data']['segments'][0]['stats']['kills']['value']}}</li>
-                                @endif
-                            </ul>
-                        </div>
-                            @else
-                            <p class="text-light">Player Stats not found</p>
-                            @endif
-                            <hr>
+                                                <ul>
+                                                    <li>
+                                                        <img src="{{$player_stats['data']['platformInfo']['avatarUrl']}}">
+                                                    </li>
 
-                        </div>
-                    </div>
+                                                    @if ($game_name == "CSGO")
+                                                        <li class="text-light">
+                                                            Kills: {{ $player_stats['data']['segments'][0]['stats']['kills']['value'] }}
+                                                        </li>
 
-                    <div class="col-md-12">
+                                                        <li class="text-light">
+                                                            Deaths: {{ $player_stats['data']['segments'][0]['stats']['deaths']['value'] }}
+                                                        </li>
 
-                            <div class="col-md-4">
-                                    @if($email >0 && $email !='')
-                                        <span class="text-light">Elo Balance : {{preg_replace('#[^\w()/.%\-&]#','',auth()->user()->elo_balance)}}</span>
-                                        &nbsp &nbsp &nbsp
+                                                        <li class="text-light">
+                                                            Kill Death Ratio: {{ $player_stats['data']['segments'][0]['stats']['kd']['value'] }}
+                                                        </li>
+                                                    @elseif ($game_name == "Apex Legends")
+                                                        <li>
+                                                            Rank: {{ $player_stats['data']['segments'][0]['stats']['level']['value'] }}
+                                                        </li>
+                                                        <li>
+                                                            Kills: {{ $player_stats['data']['segments'][0]['stats']['kills']['value'] }}
+                                                        </li>
+                                                    @endif
+                                                </ul>
+                                            @else
+                                                <p class="text-light">Player Stats not found</p>
+                                            @endif
+                                        </p>
+
                                         <hr>
-                                    @endif
-                                    @if($email !='')
-                                        <button type="button" class="btn btn-danger" id="btn-bet" data-toggle="modal" data-target="#exampleModalCentercreate_bet">
-                                            Create Own Bet
-                                        </button>
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter1">
-                                            Purchase ELO
-                                        </button>
-                                    @endif
+                                    </div>
 
+                                    <div class="col-md-12 mb-5 row">
+										<div class="col-md-4">
+                                            @if ($email > 0 && $email !='')
+                                                <span class="text-light">
+                                                    Elo Balance: {{preg_replace('#[^\w()/.%\-&]#','',auth()->user()->elo_balance)}}
+                                                </span>
 
-                            </div>
-                            <div class="col-md-4">
+                                                <hr>
+                                            @endif
 
-                                    @if($count_bet == 2 && $count_bet <> 0 && $count_bet !=1)
+											<button type="button" class="btn btn-danger" data-bs-toggle="modal"
+												data-bs-target="#staticBackdrop">
+												Create Own Bet
+											</button>
 
-                                        <form action="{{route('room.submit')}}" method="post">@csrf
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <input type="hidden" name="livestream_id" value="{{$livestream->id}}">
-                                                    <textarea type="text" name="room_name" class="form-control" placeholder="Enter Room Name only 200 charecter allowed"></textarea>
-                                                    <span class="text-danger">@error('room_name'){{$message}}@enderror</span>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <input type="submit" name="create_first_room" class="form-control btn btn-primary" id="create_first_room" value="Submit">
-                                                </div>
-                                            </div>
-                                        </form>
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+												data-bs-target="#staticBackdrop1">
+												Purchase ELO
+											</button>
+                                        </div>
 
-                                        <!-- user having room in user table -->
-                                        @elseif($count_bet == 4 && $count_bet <> 0 && $count_bet !=2 && $count_bet !=3)
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span class="text-light">Room Name : Anonymous</span>
-                                                    <button class="btn btn-link" id="change_room">Change Room Name</button>
+                                        <div class="col-md-4">
+                                            @if ($count_bet == 2 && $count_bet <> 0 && $count_bet !=1)
+                                                <div class="row">
+                                                    <form action="{{ route('room.submit') }}" method="post">
+                                                        @csrf
 
+                                                        <div class="col-md-8">
+                                                            <input type="hidden" name="livestream_id" value="{{ $livestream->id }}">
 
+                                                            <textarea type="text" name="room_name" class="form-control" placeholder="Enter Room Name only 200 character allowed"></textarea>
 
+                                                            <span class="text-danger">
+                                                                @error('room_name')
+                                                                    {{ $message }}
+                                                                @enderror
+                                                            </span>
+                                                        </div>
 
-                                                <div class="col-md-12">
-                                                <div id="show_room">
-                                                        <form action="{{route('update.room')}}" method="post">@csrf
-                                                            <input type="hidden" name="game_id" value="{{$livestream->id}}">
-
-                                                            <div class="col-md-6">
-                                                                <select name="change_room" id="select_game_room" class="btn btn-primary dropdown-toggle text-light">
-                                                                    <option value="0" disabled>-Select Room--</option>
-                                                                    @foreach($user_room_names as $room)
-                                                                    <option value="{{$room->id}}">{{$room->room_name}}</option>
-                                                                    @endforeach
-                                                                    <option value="new_room">New Room</option>
-                                                                </select>&nbsp
-                                                            </div>
-                                                            <div class="col-md-6 assign_room">
-                                                                <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary" value="Submit">
-                                                                <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary" value="Cancel">
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <!-- userroom have entry of that user then -->
-                                                <div id="show_new_room" class="add_room">
-                                                    <form action="{{route('select.new.room.update')}}" method="post">@csrf
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <input type="hidden" name="game_id" value="{{basename(request()->path())}}">
-                                                                <textarea type="text" name="room_name" class="form-control" placeholder="Enter Room Name only 200 charecter allowed" id="second_new_room_txt"></textarea>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="col-md-6">
-                                                                    <input type="submit" name="second_new_room" class="btn btn-primary" id="second_new_room_btn" value="Submit">
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <input type="button" name="cancel_select_new_room" class="btn btn-secondary" id="cancel_select_new_room" value="cancel">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                            </div>
+                                                        <div class="col-md-4">
+                                                            <input type="submit" name="create_first_room" class="btn btn-primary" id="create_first_room" value="Submit">
                                                         </div>
                                                     </form>
                                                 </div>
-                                            </div>
-                                            </div>
-                                            <!-- -------------------------------------------- -->
+                                            @elseif ($count_bet == 4 && $count_bet <> 0 && $count_bet != 2 && $count_bet != 3)
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            <h5 class="text-light mt-1">Room Name: Anonymous </h5>
 
-                                        @elseif($count_bet == 1 && $count_bet <> 0 && $count_bet !=2)
+                                                            <button class="btn btn-link" id="change_room">Change Room Name</button>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            <div id="show_room">
+                                                                <form action="{{ route('update.room') }}" method="post">
+                                                                    @csrf
+                                                                    <input type="hidden" name="game_id" value="{{ $livestream->id }}">
+
+                                                                    <div class="col-md-6">
+                                                                        <select name="change_room" id="select_game_room" class="btn btn-primary dropdown-toggle text-light">
+                                                                            <option value="0" disabled>-Select Room--</option>
+
+                                                                            @foreach($user_room_names as $room)
+                                                                                <option value="{{$room->id}}">{{$room->room_name}}</option>
+                                                                            @endforeach
+
+                                                                            <option value="new_room">New Room</option>
+                                                                        </select>
+                                                                    </div>
+
+                                                                    <div class="col-md-6 assign_room">
+                                                                        <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary" value="Submit">
+                                                                        <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary" value="Cancel">
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="show_new_room" class="add_room">
+                                                            <form action="{{ route('select.new.room.update') }}" method="post">
+                                                                @csrf
+
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <input type="hidden" name="game_id" value="{{ basename(request()->path()) }}">
+                                                                        <textarea type="text" name="room_name" class="form-control" placeholder="Enter Room Name only 200 charecter allowed" id="second_new_room_txt"></textarea>
+                                                                    </div>
+
+                                                                    <div class="col-md-6">
+                                                                        <div class="col-md-6">
+                                                                            <input type="submit" name="second_new_room" class="btn btn-primary" id="second_new_room_btn" value="Submit">
+                                                                        </div>
+
+                                                                        <div class="col-md-6">
+                                                                            <input type="button" name="cancel_select_new_room" class="btn btn-secondary" id="cancel_select_new_room" value="cancel">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @elseif ($count_bet == 1 && $count_bet <> 0 && $count_bet != 2)
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <span class="text-light">Room Name : {{$current_room_names->game_room->room_name ?? Null}}</span>
+                                                        <span class="text-light">
+                                                            Room Name: {{ $current_room_names->game_room->room_name ?? Null }}
+                                                        </span>
+
                                                         <hr>
+
                                                         <button class="btn btn-link" id="change_room">Change Room Name</button>
 
                                                         <div id="show_room">
-                                                            <form action="{{route('update.room')}}" method="post">@csrf
-                                                                <input type="hidden" name="game_id" value="{{$livestream->id}}">
-                                                                <input type="hidden" name="game_room_username" value="{{$current_room_names->username}}">
+                                                            <form action="{{ route('update.room') }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="game_id" value="{{ $livestream->id }}">
+                                                                <input type="hidden" name="game_room_username" value="{{ $current_room_names->username }}">
+
                                                                 <div class="col-md-6">
                                                                     <select name="change_room" id="select_game_room" class="btn btn-primary dropdown-toggle text-light">
                                                                         <option value="0" disabled>-Select Room--</option>
-                                                                        @foreach(@$user_room_names as $room)
-                                                                        <option value="{{$room->id}}" {{(@$room->room_name == @$current_room_names->game_room->room_name) ? 'selected' : '' }}>{{$room->room_name}}</option>
+
+                                                                        @foreach (@$user_room_names as $room)
+                                                                            <option value="{{$room->id}}" {{ (@$room->room_name == @$current_room_names->game_room->room_name) ? 'selected' : '' }}>
+                                                                                {{$room->room_name}}
+                                                                            </option>
                                                                         @endforeach
+
                                                                         <option value="new_room">New Room</option>
                                                                     </select>&nbsp
                                                                 </div>
+
                                                                 <div class="col-md-6 assign_room">
                                                                     <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary" value="Submit">
                                                                     <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary" value="Cancel">
                                                                 </div>
                                                             </form>
-                                                            </div>
+                                                        </div>
 
+                                                        <!-- second new room create -->
+                                                        <div id="show_new_room" class="add_room">
+                                                            <form action="{{ route('select.new.room.update') }}" method="post">
+                                                                @csrf
 
-
-                                                    <!-- second new room create -->
-                                                    <div id="show_new_room" class="add_room">
-                                                        <form action="{{route('select.new.room.update')}}" method="post">@csrf
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <input type="hidden" name="username" value="{{$current_room_names->username}}">
-                                                                    <input type="hidden" name="room_id" value="{{$current_room_names->game_room->id}}">
-                                                                    <input type="hidden" name="game_id" value="{{$livestream->id}}">
-                                                                    <textarea type="text" name="room_name" class="form-control" placeholder="Enter Room Name only 200 charecter allowed" id="second_new_room_txt"></textarea>
-
-                                                                </div>
-                                                                <div class="col-md-6">
+                                                                <div class="row">
                                                                     <div class="col-md-6">
-                                                                        <input type="submit" value="Submit" name="second_new_room" class="btn btn-primary" id="second_new_room_btn">
+                                                                        <input type="hidden" name="username" value="{{ $current_room_names->username }}">
+                                                                        <input type="hidden" name="room_id" value="{{ $current_room_names->game_room->id }}">
+                                                                        <input type="hidden" name="game_id" value="{{ $livestream->id }}">
+
+                                                                        <textarea type="text" name="room_name" class="form-control" placeholder="Enter Room Name only 200 charecter allowed" id="second_new_room_txt"></textarea>
                                                                     </div>
+
                                                                     <div class="col-md-6">
-                                                                        <input type="button" name="cancel_select_new_room" class="btn btn-secondary" id="cancel_select_new_room" value="cancel">
+                                                                        <div class="col-md-6">
+                                                                            <input type="submit" value="Submit" name="second_new_room" class="btn btn-primary" id="second_new_room_btn">
+                                                                        </div>
+
+                                                                        <div class="col-md-6">
+                                                                            <input type="button" name="cancel_select_new_room" class="btn btn-secondary" id="cancel_select_new_room" value="cancel">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-
-                                                            </div>
-                                                        </form>
-                                                    </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                @elseif($count_bet == 3 && $count_bet <> 0 && $count_bet !=2 && $count_bet !=1)
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-                                                            <h5 class="text-light">Room Name: {{$rm_name}}</h5>
-                                                            <hr>
-                                                        </div>
+                                            @elseif ($count_bet == 3 && $count_bet <> 0 && $count_bet !=2 && $count_bet !=1)
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h5 class="text-light">Room Name: {{ $rm_name }}</h5>
+                                                        <hr>
                                                     </div>
-                                                    @else
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-                                                        <span class="text-light">Room Name: Anonymous </span>
-                                                            <hr>
-                                                        </div>
+                                                </div>
+                                            @else
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                    <span class="text-light">Room Name: Anonymous </span>
+                                                        <hr>
                                                     </div>
-                                        @endif
+                                                </div>
+                                            @endif
+                                        </div>
 
-
-
-                            </div>
-                            <div class="col-md-4">
-                                            @if($email !='')
-                                                @if($count_label > 0)
+                                        <div class="col-md-4">
+                                            @if ($email != '')
+                                                @if ($count_label > 0)
                                                     <div id="select_game_label">
-                                                        <form method="post" action="{{route('update.label')}}">@csrf
+                                                        <form method="post" action="{{ route('update.label') }}">
+                                                            @csrf
+
                                                             <div class="row">
-                                                                <input type="hidden" name="game_id" value="{{$livestream->id}}">
+                                                                <input type="hidden" name="game_id" value="{{ $livestream->id }}">
+
                                                                 <div class="col-md-12">
                                                                     <span class="text-light">Select Label</span>
                                                                     <hr>
                                                                 </div>
+
                                                                 <div class="col-md-6">
                                                                     <select name="game_label" id="game_label" class="btn btn-primary dropdown-toggle text-light game_label">
                                                                         <option value="0" disabled>--Select Label--</option>
-                                                                        @foreach($chk_label as $label)
-                                                                        <option value="{{$label->label_game}}" {{($label->label_game == $label_name) ? 'selected' : '' }}>{{substr($label->label_game,0,30)}}</option>
 
+                                                                        @foreach($chk_label as $label)
+                                                                            <option value="{{ $label->label_game }}" {{ ($label->label_game == $label_name) ? 'selected' : '' }}>
+                                                                                {{ substr($label->label_game, 0, 30) }}
+                                                                            </option>
                                                                         @endforeach
+
                                                                         <option value="new">New Label</option>
                                                                     </select>
                                                                 </div>
+
                                                                 <div class="col-md-6">
-                                                                    <input type="hidden" name="game_id" value="{{$livestream->id}}">
+                                                                    <input type="hidden" name="game_id" value="{{ $livestream->id }}">
                                                                     <input type="submit" class="btn btn-primary not_empty_label" name="submit_label" id="submit_label" value="Add Label">
                                                                 </div>
                                                             </div>
                                                         </form>
                                                     </div>
-                                                    {{-- hidden game txt label --}}
-                                                        <div id="txt_game_label">
-                                                            <form method="post" action="{{route('select.new.label.update')}}">@csrf
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <input type="hidden" name="game_id" value="{{$livestream->id}}">
-                                                                        <textarea type="text" class="form-control" name="onchange_label_name" placeholder="Enter Label only 200 alphabets" max="200" id="chk_empty_label1"></textarea>
-                                                                        <span style="color:red;">@error('user_label'){{$message}}@enderror</span>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <input type="submit" id="chk_label1" class="btn btn-primary btn-sm add_label  " name="submit_label" value="Add Label">
-                                                                        <input type="button" class="btn btn-secondary btn-sm" name="cancel_label" id="cancel_label" value="Cancel">
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                @else
-                                                        <div class="row">
-                                                            <form method="post" action="{{route('submit.label')}}">@csrf
-                                                                <div class="col-md-8">
-                                                                    <input type="hidden" name="game_id" value="{{$livestream->id}}">
 
-                                                                    <textarea type="text" class="form-control" name="user_label" placeholder="Enter Label only 200 alphabets" max="200"></textarea>
+                                                    <div id="txt_game_label">
+                                                        <form method="post" action="{{route('select.new.label.update')}}">@csrf
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <input type="hidden" name="game_id" value="{{$livestream->id}}">
+                                                                    <textarea type="text" class="form-control" name="onchange_label_name" placeholder="Enter Label only 200 alphabets" max="200" id="chk_empty_label1"></textarea>
                                                                     <span style="color:red;">@error('user_label'){{$message}}@enderror</span>
                                                                 </div>
-                                                                <div class="col-md-4">
-                                                                    <input type="submit" class="btn btn-primary " name="submit_label" value="Submit" id="" onclick="check_label()">
+                                                                <div class="col-md-6">
+                                                                    <input type="submit" id="chk_label1" class="btn btn-primary btn-sm add_label  " name="submit_label" value="Add Label">
+                                                                    <input type="button" class="btn btn-secondary btn-sm" name="cancel_label" id="cancel_label" value="Cancel">
                                                                 </div>
-                                                            </form>
-                                                        </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                @else
+                                                    <div class="row">
+                                                        <form method="post" action="{{ route('submit.label') }}">
+                                                            @csrf
+
+                                                            <div class="col-md-8">
+                                                                <input type="hidden" name="game_id" value="{{ $livestream->id }}">
+
+                                                                <textarea type="text" class="form-control" name="user_label" placeholder="Enter Label only 200 alphabets" max="200"></textarea>
+
+                                                                <span style="color:red;">
+                                                                    @error('user_label')
+                                                                        {{ $message }}
+                                                                    @enderror
+                                                                </span>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <input type="submit" class="btn btn-primary " name="submit_label" value="Submit" id="" onclick="check_label()">
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 @endif
                                             @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12"  id="active_bet_list">
+                                        <p class="text-light">
+                                            List of Active Bets
+                                            <span style="float:right">
+                                                Pot Amount:
+                                                {{ $pot_amount }}
+                                            <span>
+                                        </p>
+
+                                        <div style="min-height: 150px;" class="table-responsive">
+                                            <table class="table text-light table-bordered table-responsive" style="background: black;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="color: white;">#</th>
+                                                        <th style="color: white;">Bet Type</th>
+                                                        <th style="color: white;">Description</th>
+                                                        <th style="color: white;">For</th>
+                                                        <th style="color: white;">Against</th>
+                                                        <th style="color: white;">Winning Amount</th>
+                                                        <th style="color: white;">No Of. Bets</th>
+                                                        <th style="color: white;">Active Hours</th>
+                                                        <th style="color: white;">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($active_bets as $key=>$active_bet)
+                                                        <tr>
+                                                            <td>{{ ++$key }}</td>
+                                                            <td>{{ $active_bet->master->description }}</td>
+                                                            <td>{{ $active_bet->description }}</td>
+                                                            <td>{{ $active_bet->for_text }}</td>
+                                                            <td>{{ $active_bet->against_text }}</td>
+                                                            <td>{{ $active_bet->betting_amount }}</td>
+                                                            <td>{{ $active_bet->bets()->count()}}/{{$setting->no_of_user_can_bet }}</td>
+                                                            <td>{{ $active_bet->created_diff }}</td>
+                                                            <td>
+                                                                @if($active_bet->is_claim_bet)
+                                                                    Claimed!!
+                                                                @else
+                                                                    @if($active_bet->is_add_bet)
+                                                                    <button type="button"  data-id="{{ $active_bet->id }}" class="btn btn-success claim_bet">
+                                                                        Claim Bet
+                                                                        </button>
+                                                                    @else
+                                                                        @if($livestream->status != "stopped")
+                                                                            @if($livestream->is_declared_result == 0 )
+                                                                                @if($active_bet->total<$setting->no_of_user_can_bet)
+                                                                                    <button type="button" data-bet-type="{{$active_bet->master->description}}" data-betting_amount="{{ $active_bet->betting_amount }}" data-vig_amount={{ $setting->vig}} data-against_text="{{ $active_bet->against_text }}" data-for_text="{{ $active_bet->for_text }}" data-description="{{ $active_bet->description }}" data-id="{{ $active_bet->id }}" class="btn btn-primary bet_now_model">
+                                                                                        Bet now
+                                                                                    </button>
+                                                                                @endif
+                                                                            @endif
+                                                                        @endif
+                                                                    @endif
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        <hr>
-                    </div>
-
-                </div>
-                    {{-- label end --}}
-
-                    <div class="col-md-12"  id="active_bet_list">
-                        <p class="text-light">List of Active Bets <span style="float:right"> Pot Amount : {{ $pot_amount }}<span></p>
-                        <div style="min-height: 400px">
-
-                            <table class="table text-light table-bordered" style="background: black;">
-                                <tr>
-                                    <th style="color: white;">#</th>
-                                    <th style="color: white;">Bet Type</th>
-                                    <th style="color: white;">Description</th>
-                                    <th style="color: white;">For</th>
-                                    <th style="color: white;">Against</th>
-                                    <th style="color: white;">Winning Amount</th>
-                                    <th style="color: white;">No Of. Bets</th>
-                                    <th style="color: white;">Active Hours</th>
-                                    <th style="color: white;"> Action</th>
-
-                                </tr>
-                                @foreach($active_bets as $key=>$active_bet)
-                                <tr>
-                                    <td>{{++$key}}</td>
-                                    <td>{{$active_bet->master->description}}</td>
-                                    <td>{{$active_bet->description}}</td>
-                                    <td>{{$active_bet->for_text}}</td>
-                                    <td>{{$active_bet->against_text}}</td>
-                                    <td>{{$active_bet->betting_amount}}</td>
-                                    <td>{{$active_bet->bets()->count()}}/{{$setting->no_of_user_can_bet}}</td>
-                                    <td>{{$active_bet->created_diff}}</td>
-                                    <td>
-                                    @if($active_bet->is_claim_bet)
-                                        Claimed!!
-                                    @else
-                                    @if($active_bet->is_add_bet)
-                                    <button type="button"  data-id="{{ $active_bet->id }}" class="btn btn-success claim_bet">
-                                        Claim Bet
-                                        </button>
-                                    @else
-                                    @if($livestream->status != "stopped")
-                                    @if($livestream->is_declared_result == 0 )
-                                    @if($active_bet->total<$setting->no_of_user_can_bet)
-                                        <button type="button" data-bet-type="{{$active_bet->master->description}}" data-betting_amount="{{ $active_bet->betting_amount }}" data-vig_amount={{ $setting->vig}} data-against_text="{{ $active_bet->against_text }}" data-for_text="{{ $active_bet->for_text }}" data-description="{{ $active_bet->description }}" data-id="{{ $active_bet->id }}" class="btn btn-primary bet_now_model">
-                                            Bet now
-                                        </button>
-                                    @endif
-                                    @endif
-                                    @endif
-                                    @endif
-                                    @endif
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </table>
-                            {{-- <button type="button" class="btn btn-link float-right" data-toggle="modal" id="show_all_bet" data-target="#activebetsmodal">
-                                Show All Bets
-                            </button> --}}
                         </div>
+                    </div>
+                </section>
+            @else
+                @if (str_contains(get_headers(env('RMPT_STREAMING_URL').'/'.$livestream->id.'.mp4')[0], "200 OK" ))
+                @else
+                    <script>
+                        alert('Recording not available ');
+                        window.top.close();
+                    </script>
+                @endif
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="video">
+                            <h3 class="text-light">{{ $livestream->name }} stream has ended</h3>
+                        </div>
+
                         <br>
 
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <video id="player" class="video-js vjs-default-skin" controls autoplay preload="auto" width="1280" height="720" data-setup='{}' >
+                                    <source src="https://live-streaming.elo-esports.com/{{ $livestream->id }}.mp4" type="video/mp4" res="9999" label="auto" />
+                                    //<source src="{{ env('RMPT_STREAMING_URL').'/'.$livestream->id }}.mp4" type="video/mp4" res="9999" label="auto" />
+                                    <p class="vjs-no-js">To view this video please enable JavaScript, and consider
+                                        upgrading to
+                                        a web
+                                        browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports
+                                            HTML5
+                                            video</a></p>
+                                </video>
+                            </div>
+                        </div>
                     </div>
-
-
-            </div>
-        </div>
-
+                </div>
+            @endif
         @else
-
-        @if(str_contains(get_headers(env('RMPT_STREAMING_URL').'/'.$livestream->id.'.mp4')[0], "200 OK")){
-        @else
-            <script>
-                alert('Recording not available ');
-                window.top.close();
-            </script>
+            <h1 class="text-danger">Stream Not Found.</h1>
         @endif
-<div class="row">
-    <div class="col-md-12">
-        <div class="video">
-            <h3 class="text-light">{{ $livestream->name }} stream has ended</h3>
-        </div>
-        <br>
-        <div class="container">
-            <div class="row justify-content-center">
-                <video id="player" class="video-js vjs-default-skin" controls autoplay preload="auto" width="1280" height="720" data-setup='{}' >
-                    <source src="https://live-streaming.elo-esports.com/{{ $livestream->id }}.mp4" type="video/mp4" res="9999" label="auto" />
-//                    <source src="{{ env('RMPT_STREAMING_URL').'/'.$livestream->id }}.mp4" type="video/mp4" res="9999" label="auto" />
-                    <p class="vjs-no-js">To view this video please enable JavaScript, and consider
-                        upgrading to
-                        a web
-                        browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports
-                            HTML5
-                            video</a></p>
-                </video>
-
-
-            </div>
-        </div>
     </div>
 </div>
-@endif
-@else
-<h1 class="text-danger">Stream Not Found.</h1>
-@endif
 
-
-<div class="modal fade" id="exampleModalCentercreate_bet" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <form method="{{url('/save-new_main_bet')}}" id="create_bet_frm">
+<div class="modal fade" id="exampleModalCentercreate_bet" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form method="{{ url('/save-new_main_bet') }}" id="create_bet_frm">
         @method('POST')
+
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -428,42 +470,43 @@
 
                 <div class="modal-body">
 					<p>
-					<label>Select Betting Amount</label>
-					<select name="betting_amount" id="betting_amount" class="empty_select btn btn-primary dropdown-toggle text-light form-control">
+                        <label>Select Betting Amount</label>
 
-						@foreach($betting_masters as $betting_master)
-							<option value="{{$betting_master->id}}">{{$betting_master->betting_amount}}</option>
+                        <select name="betting_amount" id="betting_amount" class="empty_select btn btn-primary dropdown-toggle text-light form-control">
+                            @foreach($betting_masters as $betting_master)
+                                <option value="{{ $betting_master->id }}">
+                                    {{ $betting_master->betting_amount }}
+                                </option>
+                            @endforeach
 
-                                            @endforeach
-						<option value="0">Custom</option>
-					</select>
+                            <option value="0">Custom</option>
+                        </select>
 					</p>
+
 					<p id="custom_p" style="display:none;">
                         <label>Enter Amount</label>
                         <input type="number" name="custom_amount" id="custom_amount" class="form-control empty_input"  placeholder="Enter Amount" maxlength="100" value="100">
-
                     </p>
+
                     <p>
-					<label>Description</label>
+					    <label>Description</label>
                         <textarea name="description" id="description" class="form-control empty_input"
                                placeholder="Enter Description" maxlength="220"></textarea>
+                    </p>
 
-                                            </p>
 					<p>
-					<label>Enter   For</label>
+					    <label>Enter For</label>
                         <input type="text" name="for_text" id="for_text" class="form-control empty_input"
                                placeholder="Enter For" maxlength="100">
-
 					</p>
 					<p>
-					<label>Enter   Against</label>
+					    <label>Enter Against</label>
                         <input type="text" name="against_text" id="against_text" class="form-control empty_input"
                                placeholder="Enter Against" maxlength="100">
-
 					</p>
+                </div>
 
-                                        </div>
-                    <div class="modal-footer">
+                <div class="modal-footer">
                     <button type="button" class="btn btn-secondary close_bet_popup" data-dismiss="modal">X</button>
                     <button type="button" value="Submit" class="btn btn-primary" id="submit_new_bet">Submit</button>
                 </div>
@@ -483,7 +526,6 @@
                      <button type="button" style="background:#ffffff;" class="close btn btn-sm btn-default bet_close_model" data-bs-dismiss="modal" aria-label="Close">
                         <span style="color:#000000;" aria-hidden="true">&times;</span>
                     </button>
-                    {{-- <button type="button" class="btn btn-danger" style="float:right;" data-bs-dismiss="modal">X</button> --}}
                 </div>
 
                  <div class="modal-body">
