@@ -6,7 +6,7 @@
             <div class="row row-cols-1 row-cols-md-2 align-items-center">
                 <div class="col-md-8">
                     <div class="logo d-none1 d-lg-flex">
-                        <a href="index.php">
+                        <a href="/">
                             <h3>{{ config('app.name') }}</h3>
                         </a>
                     </div>

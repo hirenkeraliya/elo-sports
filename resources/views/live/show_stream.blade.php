@@ -97,12 +97,12 @@
                                             @endif
 
 											<button type="button" class="btn btn-danger" data-bs-toggle="modal"
-												data-bs-target="#staticBackdrop">
+												data-bs-target="#exampleModalCenter">
 												Create Own Bet
 											</button>
 
                                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
-												data-bs-target="#staticBackdrop1">
+												data-bs-target="#exampleModalCenter1">
 												Purchase ELO
 											</button>
                                         </div>
@@ -507,7 +507,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary close_bet_popup" data-dismiss="modal">X</button>
+                    <button type="button" class="btn btn-secondary close_bet_popup" data-bs-dismiss="modal">X</button>
                     <button type="button" value="Submit" class="btn btn-primary" id="submit_new_bet">Submit</button>
                 </div>
             </div>
@@ -625,7 +625,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Purchase ELO</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" id="close_modal" aria-label="Close">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="close_modal" aria-label="Close">
                     </button>
                 </div>
                 <div class="modal-body" id="model_body">
@@ -657,7 +657,7 @@
         <div class="modal-content">
             <div class="modal-header"> I know I only have room for me as your wedding is on loan
                 <h5 class="modal-title" id="exampleModalLongTitle">List of All Active Bets</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -680,587 +680,511 @@
                 <br>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
             </div>
         </div>
     </div>
 </div>
-
-
-
 @endsection
 
 @section('js')
+    <script src="{{ asset('js/app.js') }}"></script>
 
+    {{-- this is bhup paypal AZgZGVtXyfUiH6iXIpdOq3ZGDeGVU92sc7SfiIy9eFhI3c9h3AK9ZY6qfjm-PgY5uLLpq0cw09GFVpmu --}}
 
+    <script src="https://www.paypal.com/sdk/js?client-id={{ \Crypt::decryptString($setting->client_id) }}&currency=USD"></script>
+    <script src="https://unpkg.com/vue@3.1.1/dist/vue.global.prod.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        window.USER_DETAILS = '{{ auth()->user() }}';
 
-{{-- this is bhup paypal AZgZGVtXyfUiH6iXIpdOq3ZGDeGVU92sc7SfiIy9eFhI3c9h3AK9ZY6qfjm-PgY5uLLpq0cw09GFVpmu --}}
+        var game_id = "{{ $livestream->id }}";
 
-  <script src="https://www.paypal.com/sdk/js?client-id={{ \Crypt::decryptString($setting->client_id) }}&currency=USD"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        $('#show_all_bet').on('click', function () {
+            $("#all_bets").html('');
+            $.ajax({
+                type: "GET",
+                url: "https://elo-esports.com/show-all-bet/" + game_id,
+                dataType: 'JSON',
+                success: function (data) {
+                    $.each(data.data, function (key, val) {
+                        var timestamp = val.created_at
+                        var date = new Date(timestamp);
+                        var date_time = date.getFullYear() +
+                            "-" + (date.getMonth() + 1) +
+                            "-" + date.getDate() +
+                            " " + date.getHours() +
+                            ":" + date.getMinutes() +
+                            ":" + date.getSeconds()
 
-<script src="https://unpkg.com/vue@3.1.1/dist/vue.global.prod.js"></script>
-{{-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.2.0/vue-resource.js"></script> --}}
+                        $("#all_bets").append("<tr><td>" + ++key + "</td><td>" + val.user.username + "</td><td>" + val.description + "</td><td>" + val.for_text + "</td><td>" + val.against_text + "</td><td>" + val.betting_amount + "</td><td><button type='button' data-id='" + val.id + "'  class='btn btn-primary bet_now_model' >Bet now</button></td></tr>");
+                    });
 
+                }
+            });
+        });
 
-<script>
-    window.USER_DETAILS = '{{ auth()->user() }}';
+        // Close modal
+        $('#close_modal').click(function (e) {
+            e.preventDefault();
+            $("#myModal").remove();
+            //location.reload();
+        });
 
+        $('#second_new_room_btn').on('click', function () {
+            var second_new_room = $('#second_new_room_txt').val();
 
-
-    var game_id = "{{$livestream->id}}";
-
-
-                 $('#show_all_bet').on('click', function() {
-        $("#all_bets").html('');
-        $.ajax({
-            type: "GET"
-            , url: "https://elo-esports.com/show-all-bet/" + game_id
-            , dataType: 'JSON'
-            , success: function(data) {
-                $.each(data.data, function(key, val) {
-                    var timestamp = val.created_at
-                    var date = new Date(timestamp);
-                    // var d = myString = val.created_at .replace(/T/, '');
-                    // var dd = myString = val.created_at .replace(/Z/, '');
-                    // console.log(dd);
-
-                    var date_time = date.getFullYear() +
-                        "-" + (date.getMonth() + 1) +
-                        "-" + date.getDate() +
-                        " " + date.getHours() +
-                        ":" + date.getMinutes() +
-                        ":" + date.getSeconds()
-
-
-
-
-                    // console.log();
-
-                    $("#all_bets").append("<tr><td>" + ++key + "</td><td>" + val.user.username + "</td><td>" + val.description + "</td><td>" + val.for_text + "</td><td>" + val.against_text + "</td><td>" + val.betting_amount + "</td><td><button type='button' data-id='" + val.id + "'  class='btn btn-primary bet_now_model' >Bet now</button></td></tr>");
-                });
-
+            if (second_new_room == '' || second_new_room == null) {
+                alert('Please add room name');
+                return false;
             }
         });
-    });
-    // Close modal
-    $('#close_modal').click(function(e) {
-        e.preventDefault();
-        $("#myModal").remove();
-        //location.reload();
-    });
-    $('#second_new_room_btn').on('click', function() {
-        var second_new_room = $('#second_new_room_txt').val();
 
-        if (second_new_room == '' || second_new_room == null) {
-            alert('Please add room name');
-            return false;
+        $('#chk_label1').on('click', function () {
+            var label_name = $('#chk_empty_label1').val();
+            if (label_name == '' || label_name == null) {
+                alert('Please add Label name');
+                return false;
+            }
+        });
+
+        $('#submit_change_room').on('click', function () {
+            var label_name = $('#select_game_room').val();
+            if (label_name == '' || label_name == null || label_name == 'new_room') {
+                alert('Please select Room ');
+                return false;
+            }
+        });
+
+        function empty_label() {
+            let label = $('#game_labe').val();
+            if (label == 0) {
+                alert('Please select label');
+                return false;
+            }
         }
-    });
 
-    $('#chk_label1').on('click', function() {
-        var label_name = $('#chk_empty_label1').val();
-        if (label_name == '' || label_name == null) {
-            alert('Please add Label name');
-            return false;
+        // validation hidden textbox
+        function validation() {
+            var label = $('.label').val();
+            if (label == '') {
+                alert('The Label field is required');
+                return false;
+            }
         }
-    });
 
-     $('#submit_change_room').on('click', function() {
-        var label_name = $('#select_game_room').val();
-        if (label_name == '' || label_name == null || label_name == 'new_room') {
-            alert('Please select Room ');
-            return false;
-        }
-    });
-
-
-    function empty_label() {
-        let label = $('#game_labe').val();
-        if (label == 0) {
-            alert('Please select label');
-            return false;
-        }
-    }
-
-
-    // validation hidden textbox
-    function validation() {
-        var label = $('.label').val();
-        if (label == '') {
-            alert('The Label field is required');
-            return false;
-        }
-    }
-
-
-    // game label change
-    $('#txt_game_label').hide();
-    $('#game_label').on('change', function() {
-        var option = $('#game_label').val();
-        // alert(option);
-        if (option == 'new') {
-            $('#select_game_label').hide();
-            $('#txt_game_label').show();
-        }
-    });
-
-
-    $('#cancel_label').on('click', function() {
-        $('#game_label').prop("selectedIndex", 0);
-        $('#select_game_label').show();
+        // game label change
         $('#txt_game_label').hide();
-    });
-
-
-
-
-    // this shows textarea for new addition of room on change event
-    $('#select_game_room').on('change', function() {
-        let new_room = $('#select_game_room').val();
-        if (new_room == 'new_room') {
-
-            $('#show_new_room').show();
-            $('#show_room').hide();
-        }
-    });
-
-    // update room
-    $('#show_room').hide();
-    $('#show_new_room').hide();
-    $('#change_room').click(function() {
-        $('#change_room').hide();
-        $('#show_room').show();
-    });
-
-    $('#cancel_change_room').click(function() {
-        $('#select_game_room').prop("selectedIndex", 0);
-        $('#change_room').show();
-        $('#show_room').hide();
-    });
-
-
-
-    $('#cancel_select_new_room').click(function() {
-        $('#select_game_room').prop("selectedIndex", 0);
-        $('#change_room').show();
-        $('#show_new_room').hide();
-        $('#show_room').hide();
-        //location.reload();
-    });
-
-
-
-
-
-    $(document).ready(function() {
-
-
-        $('body').on('click', '.bet_on', function() {
-			var bet_on=$('.bet_on:checked').val();
-			var p_amount=$('#bet_amount').val();
-			 $.ajax({
-            type: "POST",
-            url: "{{url('/calculate_vig')}}",
-            data:{
-                betting_main_id:$('#main_betting_id').val(),
-                game_id:game_id,
-				bet_on:bet_on
-            },
-            dataType:'JSON',
-            success: function (data) {
-                 var vig =data['vig'];
-				 $('#vig_amount').val(vig);
-				 var total=parseFloat(p_amount)+parseFloat(vig);
-				 $('.p_vig_amount').html(vig);
-				 $('.p_total').html(total);
-				 $('#bet_total_amount').val(total);
-
-        }
-        });
-
-
-
-        });
-        $('body').on('click', '.claim_bet', function() {
-			var id=$(this).attr('data-id');
-			 $.ajax({
-            type: "POST",
-            url: "{{url('/claim_bet')}}",
-            data:{
-                betting_main_id:id
-				, game_id: game_id
-            },
-            dataType:'JSON',
-            success: function (data) {
-                alert(data['msg']);
-                //location.reload();
-				if(data['update_html']==1){
-					$('#active_bet_list').html(data['html']);
-				}
-
-
+        $('#game_label').on('change', function () {
+            var option = $('#game_label').val();
+            // alert(option);
+            if (option == 'new') {
+                $('#select_game_label').hide();
+                $('#txt_game_label').show();
             }
         });
 
+        $('#cancel_label').on('click', function () {
+            $('#game_label').prop("selectedIndex", 0);
+            $('#select_game_label').show();
+            $('#txt_game_label').hide();
+        });
 
-		});
+        // this shows textarea for new addition of room on change event
+        $('#select_game_room').on('change', function () {
+            let new_room = $('#select_game_room').val();
+            if (new_room == 'new_room') {
 
-        $('body').on('click', '.bet_now_model', function() {
-            var id=$(this).attr('data-id');
-        var bet_on=$('.bet_on:checked').val();
+                $('#show_new_room').show();
+                $('#show_room').hide();
+            }
+        });
 
-        var p_amount=$(this).attr('data-betting_amount');
-        $('#bet_amount').val(p_amount);
-        var p_against=$(this).attr('data-against_text');
-        var p_for=$(this).attr('data-for_text');
-        var p_description=$(this).attr('data-description');
-         var p_bet_Type=$(this).attr('data-bet-type');
+        // update room
+        $('#show_room').hide();
+        $('#show_new_room').hide();
+        $('#change_room').click(function () {
+            $('#change_room').hide();
+            $('#show_room').show();
+        });
 
-        $('#main_betting_id').val(id);
-        $('.p_amount').html(p_amount);
-        $('.p_against').html(p_against);
-        $('.p_for').html(p_for);
-        $('.p_description').html(p_description);
-        $('.p_bet_type').html(p_bet_Type);
-        var amount=parseFloat(p_amount);
-        $.ajax({
+        $('#cancel_change_room').click(function () {
+            $('#select_game_room').prop("selectedIndex", 0);
+            $('#change_room').show();
+            $('#show_room').hide();
+        });
+
+        $('#cancel_select_new_room').click(function () {
+            $('#select_game_room').prop("selectedIndex", 0);
+            $('#change_room').show();
+            $('#show_new_room').hide();
+            $('#show_room').hide();
+        });
+
+        $(document).ready(function () {
+            $('body').on('click', '.bet_on', function () {
+                var bet_on = $('.bet_on:checked').val();
+                var p_amount = $('#bet_amount').val();
+                $.ajax({
                     type: "POST",
                     url: "{{url('/calculate_vig')}}",
-                    data:{
-                        betting_main_id:id,
-                        game_id:game_id,
-                        bet_on:bet_on
+                    data: {
+                        betting_main_id: $('#main_betting_id').val(),
+                        game_id: game_id,
+                        bet_on: bet_on
                     },
-                    dataType:'JSON',
+                    dataType: 'JSON',
                     success: function (data) {
-                        var vig =data['vig'];
+                        var vig = data.vig;
                         $('#vig_amount').val(vig);
-                        var total=parseFloat(p_amount)+parseFloat(vig);
+
+                        var total = parseFloat(p_amount ? p_amount : 0) + parseFloat(vig);
+
+                        $('.p_vig_amount').html(vig);
+                        $('.p_total').html(total);
+                        $('#bet_total_amount').val(total);
+
+                    }
+                });
+            });
+
+            $('body').on('click', '.claim_bet', function () {
+                var id = $(this).attr('data-id');
+                $.ajax({
+                    type: "POST",
+                    url: "{{url('/claim_bet')}}",
+                    data: {
+                        betting_main_id: id,
+                        game_id: game_id
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        alert(data['msg']);
+                        //location.reload();
+                        if (data['update_html'] == 1) {
+                            $('#active_bet_list').html(data['html']);
+                        }
+                    }
+                });
+            });
+
+            $('body').on('click', '.bet_now_model', function () {
+                var id = $(this).attr('data-id');
+                var bet_on = $('.bet_on:checked').val();
+
+                var p_amount = $(this).attr('data-betting_amount');
+                $('#bet_amount').val(p_amount);
+                var p_against = $(this).attr('data-against_text');
+                var p_for = $(this).attr('data-for_text');
+                var p_description = $(this).attr('data-description');
+                var p_bet_Type = $(this).attr('data-bet-type');
+
+                $('#main_betting_id').val(id);
+                $('.p_amount').html(p_amount);
+                $('.p_against').html(p_against);
+                $('.p_for').html(p_for);
+                $('.p_description').html(p_description);
+                $('.p_bet_type').html(p_bet_Type);
+                var amount = parseFloat(p_amount);
+                $.ajax({
+                    type: "POST",
+                    url: "{{url('/calculate_vig')}}",
+                    data: {
+                        betting_main_id: id,
+                        game_id: game_id,
+                        bet_on: bet_on
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        var vig = data['vig'];
+                        $('#vig_amount').val(vig);
+                        var total = parseFloat(p_amount) + parseFloat(vig);
                         $('.p_vig_amount').html(vig);
                         $('.p_total').html(total);
                         $('#bet_total_amount').val(total);
                         $('#exampleModalCenter').modal('show');
                     }
                 });
+            });
 
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
 
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+            @if ($livestream->type == 'twitch')
+                var options = {
+                    width: 1100,
+                    height: 380,
+                    @if (isset($data['data'][0]['user_login']))
+                        channel: "{{$data['data'][0]['user_login']}}",
+                    @endif
+                    // Only needed if this page is going to be embedded on other websites
+                    //parent: ["embed.example.com", "othersite.example.com"]
+                };
+                var player = new Twitch.Player("SamplePlayerDivID", options);
+                player.setVolume(0.5);
+            @endif
 
+            $("#purchase_elo").keyup(function () {
+                var conversion = "1";
+                var val = this.value + ' ELO = ' + conversion * this.value + ' USD';
+                $("#calcELO").text(val);
+            });
 
-        @if($livestream-> type == 'twitch') {
-            var options = {
-                width: 1100
-                , height: 380
-                , @if(isset($data['data'][0]['user_login']))
-                channel: "{{$data['data'][0]['user_login']}}"
-                , @endif
-                // Only needed if this page is going to be embedded on other websites
-                //parent: ["embed.example.com", "othersite.example.com"]
-            };
-            var player = new Twitch.Player("SamplePlayerDivID", options);
-            player.setVolume(0.5);
-        }
-        @endif
+            $('#submit').on('click', function () {
+                var bet_amt = $('#bet_amt').val();
+                var game_id = $('#game_id').val();
 
+                // alert(bet_amt);
+                // ------------------
+                var bet_total_amount = Math.round(bet_total_amount)
 
-
-        $("#purchase_elo").keyup(function() {
-            var conversion = "1";
-            var val = this.value + ' ELO = ' + conversion * this.value + ' USD';
-            $("#calcELO").text(val);
-        });
-
-        $('#submit').on('click', function() {
-            var bet_amt = $('#bet_amt').val();
-            var game_id = $('#game_id').val();
-
-            // alert(bet_amt);
-            // ------------------
-			var bet_total_amount= Math.round(bet_total_amount)
-           if (Number.isInteger(+bet_total_amount)) {
-                if (bet_total_amount > 0) {
-                    $.ajax({
-                        type: "POST"
-                        , url: "{{route('bet')}}"
-                        , data: {
-                            bet_amt: bet_amt
-                            , game_id: game_id
-                        }
-                        , dataType: 'JSON'
-                        , success: function(data) {
-                            if (data['msg1'] == 0) {
-                                alert(data['msg2']);
-                                // $('#exampleModalCenter').modal('hide');
-                                $('#elo_purchase').show();
-                                //location.reload();
-                            } else {
-                                alert(data['msg2']);
-                                // $('#exampleModalCenter').modal('hide');
-                                location.reload();
-                                // $('#elo_purchase').hide();
-                            }
-
-                        }
-                    });
-                } else {
-                    alert('Bet amount must be greater than 0');
-                }
-            } else {
-                alert('Please Enter only Integer value');
-            }
-        });
-$('#betting_amount').on('change', function() {
-var val = $(this).val();
-var html = $('#betting_amount :selected').text();
-if(val=='0')
-{
-	$('#custom_p').show();
-	$('#custom_amount').val('');
-}else{
-	$('#custom_p').hide();
-	$('#custom_amount').val(html);
-}
-});
-$('#submit_bet').on('click', function() {
-            var game_id = $('#model_game_id').val();
-            var main_betting_id = $('#main_betting_id').val();
-            var vig_amount = $('#vig_amount').val();
-            var bet_total_amount = $('#bet_total_amount').val();
-            var bet_amount = $('#bet_amount').val();
-            var bet_on = $('.bet_on:checked').val();
-            // alert(bet_amt);
-            // ------------------
-			var bet_total_amount= Math.round(bet_total_amount)
-           if (Number.isInteger(+bet_total_amount)) {
-                if (bet_total_amount > 0) {
-                    $.ajax({
-                        type: "POST"
-                        , url: "{{route('bet')}}"
-                        , data: {
-                            main_betting_id: main_betting_id,
-							game_id: game_id,
-							vig_amount:vig_amount,
-							bet_total_amount:bet_total_amount,
-							bet_amount:bet_amount,
-							bet_on:bet_on
-                        }
-                        , dataType: 'JSON'
-                        , success: function(data) {
-							 if(data['update_html']==1){
-								$('#active_bet_list').html(data['html']);
-							}
-                            if (data['msg1'] == 0) {
-                                alert(data['msg2']);
-                                 $('#exampleModalCenter').modal('hide');
-                                $('#elo_purchase').show();
-                                //location.reload();
-                            } else {
-                                alert(data['msg2']);
-                                // $('#exampleModalCenter').modal('hide');
-                               // location.reload();
-
-								$('.bet_close_model').trigger("click");
-
-                                // $('#elo_purchase').hide();
-                            }
-                        }
-                    });
-                } else {
-                    alert('Bet amount must be greater than 0');
-                }
-            } else {
-                alert('Please Enter only Integer value');
-            }
-        });
-
-        $('body').on('click','#submit_new_bet', function() {
-
-            var betting_id = parseInt($('#betting_amount').val());
-            var custom_amount = parseInt($('#custom_amount').val());
-
-            var for_text = $('#for_text').val();
-            var against_text = $('#against_text').val();
-            var description = $('#description').val();
-            var game_id = $('#game_id').val();
-            // alert(bet_amt);
-            // ------------------
-
-
-            if (custom_amount > 0) {
-
-				if ((custom_amount > 99)&&(custom_amount < 10001)) {
-                if (for_text.length > 0) {
-                    if (against_text.length > 0) {
-                        if (description.length > 0) {
-                            $.ajax({
-                                type: "POST"
-                                , url: "{{url('/save-new_main_bet')}}"
-                                , data: {
-                                    betting_id: betting_id
-                                    , custom_amount: custom_amount
-                                    , for_text: for_text
-                                    , against_text: against_text
-                                    , game_id: game_id
-                                    , description: description
+                if (Number.isInteger(+bet_total_amount)) {
+                    if (bet_total_amount > 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: "{{route('bet')}}",
+                            data: {
+                                bet_amt: bet_amt,
+                                game_id: game_id
+                            },
+                            dataType: 'JSON',
+                            success: function (data) {
+                                if (data['msg1'] == 0) {
+                                    alert(data['msg2']);
+                                    // $('#exampleModalCenter').modal('hide');
+                                    $('#elo_purchase').show();
+                                    //location.reload();
+                                } else {
+                                    alert(data['msg2']);
+                                    // $('#exampleModalCenter').modal('hide');
+                                    location.reload();
+                                    // $('#elo_purchase').hide();
                                 }
-                                , dataType: 'JSON'
-                                , success: function(data) {
-									if(data['update_html']==1){
-										$('#active_bet_list').html(data['html']);
-									}
-                                    if (data['msg1'] == 0) {
-                                        alert(data['msg2']);
-                                        // $('#exampleModalCenter').modal('hide');
-                                        $('#elo_purchase').show();
-                                        //location.reload();
-                                    } else {
-                                        alert(data['msg2']);
-                                        // $('#exampleModalCenter').modal('hide');
-										$('.empty_input').val('');
-										$('.empty_input').val('');
-										$(".empty_select").val($(".empty_select option").eq(1).val());
-                                         $('.close_bet_popup').trigger("click");
-										//location.reload();
-                                        // $('#elo_purchase').hide();
-                                    }
 
-
-
-							   }
-                            });
-                        } else {
-                            alert('Please enter description');
-                        }
+                            }
+                        });
                     } else {
-                        alert('Please enter against text');
+                        alert('Bet amount must be greater than 0');
                     }
                 } else {
-                    alert('Please enter for text');
+                    alert('Please Enter only Integer value');
                 }
-            } else {
-                alert('Please enter betting amount must be greater than 100 and less than 10000 ');
-            } }else {
-                alert('Please select betting amount');
-            }
-        });
+            });
 
-        var payment_success = 0;
-        var transaction_id = 0;
-        var status = 0;
-        var base_url = "{{url('/')}}";
-        var conversion = "{{$conversion->usd_amt}}";
-        var username = "{{Cookie::get('username')}}";
-        var purchase_elo = $('#purchase_elo').val();
+            $('#betting_amount').on('change', function () {
+                var val = $(this).val();
+                var html = $('#betting_amount :selected').text();
+                if (val == '0') {
+                    $('#custom_p').show();
+                    $('#custom_amount').val('');
+                } else {
+                    $('#custom_p').hide();
+                    $('#custom_amount').val(html);
+                }
+            });
 
+            $('#submit_bet').on('click', function () {
+                var game_id = $('#model_game_id').val();
+                var main_betting_id = $('#main_betting_id').val();
+                var vig_amount = $('#vig_amount').val();
+                var bet_total_amount = $('#bet_total_amount').val();
+                var bet_amount = $('#bet_amount').val();
+                var bet_on = $('.bet_on:checked').val();
+                // alert(bet_amt);
+                // ------------------
 
-        console.log("USD:" + purchase_elo);
-        console.log("username:" + username);
-        var usd_amount = purchase_elo * conversion;
+                var bet_total_amount = Math.round(bet_total_amount)
+                if (Number.isInteger(+bet_total_amount)) {
+                    if (bet_total_amount > 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: "{{route('bet')}}",
+                            data: {
+                                main_betting_id: main_betting_id,
+                                game_id: game_id,
+                                vig_amount: vig_amount,
+                                bet_total_amount: bet_total_amount,
+                                bet_amount: bet_amount,
+                                bet_on: bet_on
+                            },
+                            dataType: 'JSON',
+                            success: function (data) {
+                                if (data['update_html'] == 1) {
+                                    $('#active_bet_list').html(data['html']);
+                                }
+                                if (data['msg1'] == 0) {
+                                    alert(data['msg2']);
+                                    $('#exampleModalCenter').modal('hide');
+                                    $('#elo_purchase').show();
+                                    //location.reload();
+                                } else {
+                                    alert(data['msg2']);
+                                    // $('#exampleModalCenter').modal('hide');
+                                    // location.reload();
 
+                                    $('.bet_close_model').trigger("click");
 
-        paypal.Buttons({
-            // Sets up the transaction when a payment button is clicked
-            createOrder: (data, actions) => {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: $('#purchase_elo').val() * conversion // Can also reference a variable or function
+                                    // $('#elo_purchase').hide();
+                                }
+                            }
+                        });
+                    } else {
+                        alert('Bet amount must be greater than 0');
+                    }
+                } else {
+                    alert('Please Enter only Integer value');
+                }
+            });
+
+            $('body').on('click', '#submit_new_bet', function () {
+                var betting_id = parseInt($('#betting_amount').val());
+                var custom_amount = parseInt($('#custom_amount').val());
+                var for_text = $('#for_text').val();
+                var against_text = $('#against_text').val();
+                var description = $('#description').val();
+                var game_id = $('#game_id').val();
+                // alert(bet_amt);
+                // ------------------
+                if (custom_amount > 0) {
+
+                    if ((custom_amount > 99) && (custom_amount < 10001)) {
+                        if (for_text.length > 0) {
+                            if (against_text.length > 0) {
+                                if (description.length > 0) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "{{url('/save-new_main_bet')}}",
+                                        data: {
+                                            betting_id: betting_id,
+                                            custom_amount: custom_amount,
+                                            for_text: for_text,
+                                            against_text: against_text,
+                                            game_id: game_id,
+                                            description: description
+                                        },
+                                        dataType: 'JSON',
+                                        success: function (data) {
+                                            if (data['update_html'] == 1) {
+                                                $('#active_bet_list').html(data['html']);
+                                            }
+                                            if (data['msg1'] == 0) {
+                                                alert(data['msg2']);
+                                                // $('#exampleModalCenter').modal('hide');
+                                                $('#elo_purchase').show();
+                                                //location.reload();
+                                            } else {
+                                                alert(data['msg2']);
+                                                // $('#exampleModalCenter').modal('hide');
+                                                $('.empty_input').val('');
+                                                $('.empty_input').val('');
+                                                $(".empty_select").val($(".empty_select option").eq(1).val());
+                                                $('.close_bet_popup').trigger("click");
+                                                //location.reload();
+                                                // $('#elo_purchase').hide();
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    alert('Please enter description');
+                                }
+                            } else {
+                                alert('Please enter against text');
+                            }
+                        } else {
+                            alert('Please enter for text');
                         }
-                    }]
-                });
-            },
-            // Finalize the transaction after payer approval
-            onApprove: (data, actions) => {
-                return actions.order.capture().then(function(orderData) {
-                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                    const transaction = orderData.purchase_units[0].payments.captures[0];
-                    //alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                    } else {
+                        alert('Please enter betting amount must be greater than 100 and less than 10000 ');
+                    }
+                } else {
+                    alert('Please select betting amount');
+                }
+            });
 
+            var payment_success = 0;
+            var transaction_id = 0;
+            var status = 0;
+            var base_url = "{{url('/')}}";
+            var conversion = "{{$conversion->usd_amt}}";
+            var username = "{{Cookie::get('username')}}";
+            var purchase_elo = $('#purchase_elo').val();
+            var usd_amount = purchase_elo * conversion;
 
-                    //if (transaction.status=='COMPLETED') {
-                    transaction_id = transaction.id;
-                    status = transaction.status;
-                    console.log("inside COMPLETED status");
+            paypal.Buttons({
+                // Sets up the transaction when a payment button is clicked
+                createOrder: (data, actions) => {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: $('#purchase_elo').val() * conversion // Can also reference a variable or function
+                            }
+                        }]
+                    });
+                },
+                // Finalize the transaction after payer approval
+                onApprove: (data, actions) => {
+                    return actions.order.capture().then(function (orderData) {
+                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                        const transaction = orderData.purchase_units[0].payments.captures[0];
+                        //alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
 
-                    $('#model_body').hide();
-                    $('#paypal-button-container').hide();
+                        //if (transaction.status=='COMPLETED') {
+                        transaction_id = transaction.id;
+                        status = transaction.status;
+                        console.log("inside COMPLETED status");
 
-                    var completion_block = document.getElementById("completion-block");
-                    completion_block.style.display = completion_block.style.display === 'none' ? 'block' : 'none';
-                    // $('#completion-block').css('display:block');
-                    if (transaction.status == 'COMPLETED')
-                        $('#completion-text').text("Your payments processed successfully, Payment Status: " + transaction.status);
-                    else
-                        $('#completion-text').text("Your payments is on hold, Payment Status: " + transaction.status);
+                        $('#model_body').hide();
+                        $('#paypal-button-container').hide();
 
-                    payment_success = 1;
+                        var completion_block = document.getElementById("completion-block");
+                        completion_block.style.display = completion_block.style.display === 'none' ? 'block' : 'none';
+                        // $('#completion-block').css('display:block');
+                        if (transaction.status == 'COMPLETED')
+                            $('#completion-text').text("Your payments processed successfully, Payment Status: " + transaction.status);
+                        else
+                            $('#completion-text').text("Your payments is on hold, Payment Status: " + transaction.status);
 
-                    // console.log("APP-URL:"+url('/'));
-                    var purchase_elo = $('#purchase_elo').val();
+                        payment_success = 1;
 
-                    console.log("purchase_elo:" + purchase_elo);
+                        // console.log("APP-URL:"+url('/'));
+                        var purchase_elo = $('#purchase_elo').val();
 
-                    var usd_amount = purchase_elo * conversion;
+                        console.log("purchase_elo:" + purchase_elo);
 
-                    var param = "?status=" + transaction.status + "&transaction_id=" + transaction.id + "&elo_amount=" + purchase_elo + "&usd_amount=" + usd_amount + "&user_name=" + username;
+                        var usd_amount = purchase_elo * conversion;
 
-                    const url = base_url + '/ajax_file.php' + param;
+                        var param = "?status=" + transaction.status + "&transaction_id=" + transaction.id + "&elo_amount=" + purchase_elo + "&usd_amount=" + usd_amount + "&user_name=" + username;
 
-                    // Message to send. In this example an object with a state property.
-                    // You can change the properties to whatever you want.
+                        const url = base_url + '/ajax_file.php' + param;
 
- $.ajax({
-						type: "POST",
-						url: "{{url('/transfer_paypal_to_wallet')}}",
-						data:{
-							_token:"{{ csrf_token() }}",
-							status: transaction.status
-                        , transaction_id: transaction.id
-                        , elo_amount: purchase_elo
-                        , usd_amount: usd_amount
-						},
-						dataType:'JSON',
-						success: function (data) {
-						setTimeout(function() {
-                        location.reload();
-                    }, 5000);
-					}
-					});
+                        // Message to send. In this example an object with a state property.
+                        // You can change the properties to whatever you want.
 
-                });
-
-            }
-        }).render('#paypal-button-container');
-
-
-    });
-
-</script>
-
-
-
+                        $.ajax({
+                            type: "POST",
+                            url: "{{url('/transfer_paypal_to_wallet')}}",
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                status: transaction.status,
+                                transaction_id: transaction.id,
+                                elo_amount: purchase_elo,
+                                usd_amount: usd_amount
+                            },
+                            dataType: 'JSON',
+                            success: function (data) {
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 5000);
+                            }
+                        });
+                    });
+                }
+            }).render('#paypal-button-container');
+        });
+    </script>
 @endsection
-
-
-{{-- axay
-Vj1234?!!! --}}
-
-
-{{-- VJ1234?!!!VJ
-
-ssh root@159.65.150.15 --}}

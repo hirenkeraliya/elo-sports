@@ -581,8 +581,9 @@ export default {
         scrollToEnd() {
 
             this.$nextTick(() => {
-
-                this.$refs.modalview.scrollTop = this.$refs.modalview.scrollHeight;
+                if (this.$refs.modalview) {
+                    this.$refs.modalview.scrollTop = this.$refs.modalview.scrollHeight;
+                }
             });
         },
         openModal() {
@@ -700,7 +701,7 @@ export default {
     watch: {
         'messages': function (val, oldVal) {
             this.$nextTick(function () {
-                console.log(this.refs.emojis)
+                //
             });
         },
         'open': function (e) {

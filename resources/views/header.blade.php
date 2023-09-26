@@ -9,7 +9,7 @@
 
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-						<a class="nav-link" href="index.php">TV</a>
+						<a class="nav-link" href="/">TV</a>
                     </li>
                     <li class="nav-item">
 						<a class="nav-link" href="#">Sportsbook</a>
@@ -40,12 +40,12 @@
 				<div class="col col-md-auto">
 					<div class="d-flex align-items-center">
 						<div class="logo d-none1 d-lg-flex">
-							<a href="index.php">
+							<a href="/">
 								<h3>{{ config('app.name') }}</h3>
 							</a>
 						</div>
 
-						<div class="mobile-toggle-menu d-lg-none px-lg-2" data-trigger="#navbar_main">
+						<div class="mobile-toggle-menu d-lg-none px-lg-2" data-bs-trigger="#navbar_main">
 							<i class='bx bx-menu'></i>
 						</div>
 					</div>
