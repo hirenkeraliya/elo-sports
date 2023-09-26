@@ -83,7 +83,7 @@
                             Also Copy Stream Key and paste it in OBS -> Settings -> Stream -> Custom in Stream Key<br>
                             box.<br>
                             <br>
-                            4. Sources ->; Click + Sign -> Select your source from the given dropdown.<br>
+                            4. Sources -> Click + Sign -> Select your source from the given dropdown.<br>
                             <br>
                             5. Start Streaming in OBS.<br>
                         </p>

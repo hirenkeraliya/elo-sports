@@ -21,7 +21,7 @@
 	<link href="{{ asset('assets/front/css/icons.css') }}" rel="stylesheet">
 </head>
 
-<body class="bg-theme bg-theme1" style="background-image:url('/assets/front/images/slid1.png');background-size: cover;background-repeat: no-repeat;">
+<body class="bg-theme bg-theme1">
 	<b class="screen-overlay"></b>
 
 	<div class="wrapper">
@@ -32,6 +32,15 @@
 						<div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
 							<div class="row row-cols-1 row-cols-xl-2">
 								<div class="col mx-auto">
+									<center>
+								        <img src="{{ asset('assets/front/images/logo.png') }}" class="logo" alt="logo" />
+
+ 								    	<h6 class="mt-4 mb-4">
+											Bringing you the best live and
+											<br>
+											on-demand sport and racing content
+										</h6>
+									</center>
 									<div class="card" style="background-color: white; color:black">
 										@yield('content')
 									</div>

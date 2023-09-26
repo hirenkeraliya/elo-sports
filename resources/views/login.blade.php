@@ -4,7 +4,10 @@
     <div class="card-body">
         <div class="border p-4 rounded">
             <div class="text-center">
-                <h4 class="text-dark">Log in</h4>
+                <h4 class="text-dark">Log in to {{ config('app.name') }}</h4>
+                <p class="mt-4 mb-4 fs-6">
+                    Please enter your ELO Esports<br> or TVG account details below
+                </p>
             </div>
 
             <div class="form-body">

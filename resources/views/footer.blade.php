@@ -7,7 +7,7 @@
                 <div class="col-md-8">
                     <div class="logo d-none1 d-lg-flex">
                         <a href="/">
-                            <h3>{{ config('app.name') }}</h3>
+                            <img src="{{ asset('assets/front/images/logo.png') }}" class="logo-icon" alt="logo" />
                         </a>
                     </div>
                 </div>

@@ -15,7 +15,7 @@
     <div class="page-content">
         <section class="py-0 py-lg-5">
             <div class="container">
-                <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0" style="background-color:black;">
+                <div class="section-authentication-signin1 d-flex align-items-center justify-content-center my-5 my-lg-0" style="background-color:black;height: 60vh;">
                     <div class="row row-cols-1 row-cols-lg-1 row-cols-xl-2" >
                         <div class="col mx-auto">
                             <i class="bx bx-play" style="font-size:50px;"></i>

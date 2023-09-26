@@ -1,33 +1,24 @@
 <div class="header-wrapper bg-dark-1 ">
-    <div class="primary-menu border-top bg-dark-blue d-none">
-        <div class="container">
+    <div class="primary-menu border-top bg-dark-blue">
+        <div class="container d-lg-none">
             <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg">
                 <div class="offcanvas-header">
                     <button class="btn-close float-end"></button>
-                    <h5 class="py-2 text-white">Navigation</h5>
+                    <h5 class="py-2 text-white">Menu</h5>
                 </div>
 
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-						<a class="nav-link" href="/">TV</a>
+						<a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-						<a class="nav-link" href="#">Sportsbook</a>
+						<a class="nav-link" href="{{ route('login') }}">Log in</a>
                     </li>
                     <li class="nav-item">
-						<a class="nav-link" href="#">Restrict </a>
+						<a class="nav-link" href="{{ route('register') }}">Sign up</a>
                     </li>
                     <li class="nav-item">
-						<a class="nav-link" href="#">Racing </a>
-                    </li>
-                    <li class="nav-item">
-						<a class="nav-link" href="#">Casino</a>
-                    </li>
-                    <li class="nav-item">
-						<a class="nav-link" href="#">Research </a>
-                    </li>
-                    <li class="nav-item">
-						<a class="nav-link" href="#">Faceoff</a>
+						<a class="nav-link" href="{{ route('stream.form.index') }}">Start Stream</a>
                     </li>
                 </ul>
             </nav>
@@ -39,14 +30,16 @@
 			<div class="row align-items-center">
 				<div class="col col-md-auto">
 					<div class="d-flex align-items-center">
-						<div class="logo d-none1 d-lg-flex">
-							<a href="/">
-								<h3>{{ config('app.name') }}</h3>
-							</a>
+						<div class="mobile-toggle-menu d-lg-none px-lg-2" data-trigger="#navbar_main">
+							<i class='bx bx-menu'></i>
 						</div>
 
-						<div class="mobile-toggle-menu d-lg-none px-lg-2" data-bs-trigger="#navbar_main">
-							<i class='bx bx-menu'></i>
+						<div class="logo d-none d-lg-flex">
+							<a href="/">
+								<h3>
+									<img src="{{ asset('assets/front/images/logo.png') }}" class="logo" alt="Logo">
+								</h3>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -100,6 +93,12 @@
 				@endif
 
 				<div class="col col-md-auto order-2 order-md-4">
+					<div class="logo d-lg-none d-lg-flex">
+						<a href="index.php">
+							<img src="{{ asset('assets/front/images/logo.png') }}" class="logo" alt="Logo">
+						</a>
+					</div>
+
 					<nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg">
 						<div class="offcanvas-header">
 							<button class="btn-close float-end"></button>
@@ -111,7 +110,7 @@
 							</li>
 
 							@if (auth()->check() && count(auth()->user()->roles) > 0)
-								<li class="nav-item active">
+								<li class="nav-item">
 									<a class="nav-link" href="{{ route('dashboard') }}">Go To Admin</a>
 								</li>
                         	@endif
