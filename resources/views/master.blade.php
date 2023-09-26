@@ -12,6 +12,13 @@
 
 	<title>{{ config('app.name') }}</title>
 
+	<link rel="icon" href="{{ asset('assets/front/images/favicon-32x32.png') }}" type="image/png" />
+	<!--plugins-->
+	<link href="{{ asset('assets/front/css/owl.carousel.min.css') }}" rel="stylesheet" />
+	<link href="{{ asset('assets/front/css/simplebar.css') }}" rel="stylesheet" />
+	<link href="{{ asset('assets/front/css/perfect-scrollbar.css') }}" rel="stylesheet" />
+	<link href="{{ asset('assets/front/css/metisMenu.min.css') }}" rel="stylesheet" />
+
     <link href="{{ asset('assets/front/css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">

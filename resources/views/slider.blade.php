@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="col">
-                            <img src="assets/images/slider/tv.png" class="img-fluid mt-5 mb-5 d-none" alt="...">
+                            <img src="" class="img-fluid mt-5 mb-5 d-none" alt="...">
                         </div>
                     </div>
                 </div>
