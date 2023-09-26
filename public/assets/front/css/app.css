@@ -5,7 +5,7 @@ Email: codervent@gmail.com
 File: app.css
 */
 
-/* 
+/*
 
   - General
   - Header
@@ -127,7 +127,7 @@ a {
 }
 body.offcanvas-active {
 	overflow: hidden;
-	
+
 }
 .offcanvas-header {
 	display: none;
@@ -461,11 +461,15 @@ ul.categories-list li {
 .page-wrapper {
 	height: 100%;
 	margin-bottom: 0px;
-	margin-left: 0px
+	margin-left: 0px;
+	min-height:550px;
 }
 .page-content {
 	padding: 0
 }
+footer{/*position: fixed;
+   bottom: 0;
+   width: 100%;*/}
 .page-footer {
 	background: rgb(0 0 0 / 20%);
 	position: absolute;
@@ -946,18 +950,18 @@ ul.categories-list li {
 /* Authentication */
 
 .section-authentication-signin {
-	height: 180vh
+	height: 150vh
 }
 .authentication-forgot {
-	height: 180vh;
+	height: 150vh;
 	padding: 0 1rem
 }
 .authentication-reset-password {
-	height: 180vh;
+	height: 150vh;
 	padding: 0 1rem
 }
 .authentication-lock-screen {
-	height: 180vh;
+	height: 150vh;
 	padding: 0 1rem
 }
 .error-404 {
@@ -1417,6 +1421,7 @@ ul.categories-list li {
 body.bg-theme1 {
 	/*background-image: url(../images/bg-themes/1.png);*/
 	background-color: #011638;
+	background-image:linear-gradient(90deg, rgba(73,5,69,1) 0%, rgb(210, 18, 108) 56%, rgba(97,23,199,1) 100%);
 }
 body.bg-theme2 {
 	background-image: url(../images/bg-themes/2.png);
@@ -1514,13 +1519,14 @@ body.bg-theme15 {
 
 /*bg*/
 .bg-dark-blue{background-color:#052546;}
-.bg-dark-blue2{background-color: #05285a;}
+.bg-dark-blue2{background-color: #05285a;
+background-image: linear-gradient(175deg, rgba(73,5,69,1) 0%, rgb(210, 18, 108) 56%, rgba(97,23,199,1) 100%);}
 .active{background-color: #05285a;}
 .mt-n10{margin-top:-10%;}
 .mt-n12{margin-top:-14% !important;}
 .product-name{font-size:12px;}
 .modal.show .modal-dialog{width:95% !important;}
-.text-ellipsis1{white-space: nowrap; 
+.text-ellipsis1{white-space: nowrap;
  /* width: 50px; */
   overflow: hidden;
   text-overflow: ellipsis; }
