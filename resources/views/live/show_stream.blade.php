@@ -15,13 +15,16 @@
     <div class="page-content">
         <section class="py-0 py-lg-5">
             <div class="container">
-                <div class="section-authentication-signin1 d-flex align-items-center justify-content-center my-5 my-lg-0" style="background-color:black;height: 60vh;">
-                    <div class="row row-cols-1 row-cols-lg-1 row-cols-xl-2" >
-                        <div class="col mx-auto">
-                            <i class="bx bx-play" style="font-size:50px;"></i>
-                        </div>
-                    </div>
-                    <!--end row-->
+                <div class="section-authentication-signin1 d-flex align-items-center justify-content-center my-5 my-lg-0">
+                    <video id="player" class="video-js" controls autoplay preload="auto" width="1280" height="720" data-setup="{}">
+                        <source src=" {{ env('RMPT_STREAMING_LINK').'/'.$livestream->stream_id }}.m3u8" type="application/x-mpegURL" res="9999" label="auto" />
+                        <p class="vjs-no-js">To view this video please enable JavaScript, and consider
+                            upgrading to
+                            a web
+                            browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports
+                                HTML5
+                                video</a></p>
+                    </video>
                 </div>
             </div>
         </section>
