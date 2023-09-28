@@ -26,7 +26,7 @@ class UserController extends Controller
     public function registeraccount(Request $req)
     {
 
-        $userExists = DB::table('user')->where('Email', $req->email)->where('Username', $req->username)->first();
+        $userExists = DB::table('user')->where('Email', $req->email)->orWhere('Username', $req->username)->first();
 
         if ($userExists == null) {
             $user = new Users();
@@ -55,7 +55,7 @@ class UserController extends Controller
             $user->business_info = $req->business_info;
             $user->address = $req->address;
             $user->profile = $imageName;
-			$user->stream_key = Str::replace("-", "", Str::orderedUuid());
+            $user->stream_key = Str::replace("-", "", Str::orderedUuid());
             $user->password = Hash::make($req->password);
             $user->save();
 
@@ -71,7 +71,7 @@ class UserController extends Controller
 
     public function loginaccount(Request $req)
     {
-       
+
 
         $req->validate([
             'username' => 'required',
@@ -86,19 +86,19 @@ class UserController extends Controller
 
         // check auth
         if (Auth::attempt($credentials)) {
-           if(auth()->user()->status == 1){
-           
-           
-            if(auth()->user()->user_type == 'admin'){
-                return redirect()->to('/dashboard');
-            }
-           return  redirect()->to('/');
-            }else{
+            if(auth()->user()->status == 1) {
+
+
+                if(auth()->user()->user_type == 'admin') {
+                    return redirect()->to('/dashboard');
+                }
+                return  redirect()->to('/');
+            } else {
                 auth()->logout();
                 Session::flush();
                 return redirect('/login');
             }
-            
+
         }
 
         //

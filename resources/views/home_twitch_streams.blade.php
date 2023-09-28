@@ -13,19 +13,13 @@
                         <a href="{{ route('specific_stream', ['id' => $elem['user_id']]) }}">
                             <div class="item">
                                 <div class="card rounded-0 product-card">
-                                    <a href="#">
-                                        <img src="{{ Str::replace('{width}x{height}', '350x200', $elem['thumbnail_url']) }}" class="card-img-top" alt="{{ $elem['title'] }}">
-                                    </a>
+                                    <img src="{{ Str::replace('{width}x{height}', '251x141', $elem['thumbnail_url']) }}" class="card-img-top" alt="{{ $elem['title'] }}">
 
                                     <div class="card-body">
                                         <div class="product-info">
-
-                                            <a href="javascript:;">
-                                                <h6 class="product-name text-ellipsis text-ellipsis mb-2 fs-6">
-                                                    {{ $elem['title'] }}
-                                                </h6>
-                                            </a>
-
+                                            <h6 class="product-name text-ellipsis text-ellipsis mb-2 fs-6">
+                                                {{ $elem['title'] }}
+                                            </h6>
                                         </div>
                                     </div>
                                 </div>

@@ -438,8 +438,7 @@
                         <div class="container">
                             <div class="row justify-content-center">
                                 <video id="player" class="video-js vjs-default-skin" controls autoplay preload="auto" width="1280" height="720" data-setup='{}' >
-                                    <source src="https://live-streaming.elo-esports.com/{{ $livestream->id }}.mp4" type="video/mp4" res="9999" label="auto" />
-                                    //<source src="{{ env('RMPT_STREAMING_URL').'/'.$livestream->id }}.mp4" type="video/mp4" res="9999" label="auto" />
+                                    <source src=" {{ env('RMPT_STREAMING_LINK').'/'.$livestream->stream_id }}.m3u8" type="application/x-mpegURL" res="9999" label="auto" />
                                     <p class="vjs-no-js">To view this video please enable JavaScript, and consider
                                         upgrading to
                                         a web
@@ -519,12 +518,11 @@
 {{-- bet now modal --}}
 <form action="" id="frm_submit">
     <div class="modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background-color: #13143e;">
                 <div class="modal-header" style="background: #d9140d;color: #fff;">
                     <h5 class="modal-title" id="exampleModalLongTitle">Bet Now</h5>
-                     <button type="button" style="background:#ffffff;" class="close btn btn-sm btn-default bet_close_model" data-bs-dismiss="modal" aria-label="Close">
-                        <span style="color:#000000;" aria-hidden="true">&times;</span>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
 
