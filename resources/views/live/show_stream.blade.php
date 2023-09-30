@@ -364,7 +364,7 @@
                                         </p>
 
                                         <div style="min-height: 150px;" class="table-responsive">
-                                            <table class="table text-light table-bordered table-responsive" style="background: black;">
+                                            <table class="table text-light table-bordered table-responsive">
                                                 <thead>
                                                     <tr>
                                                         <th style="color: white;">#</th>
@@ -693,7 +693,9 @@
     <script src="{{ asset('js/app.js') }}"></script>
 
     {{-- this is bhup paypal AZgZGVtXyfUiH6iXIpdOq3ZGDeGVU92sc7SfiIy9eFhI3c9h3AK9ZY6qfjm-PgY5uLLpq0cw09GFVpmu --}}
-
+    <link href="https://vjs.zencdn.net/7.8.2/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+    <script src="https://vjs.zencdn.net/7.8.2/video.js"></script>
     <script src="https://www.paypal.com/sdk/js?client-id={{ \Crypt::decryptString($setting->client_id) }}&currency=USD"></script>
     <script src="https://unpkg.com/vue@3.1.1/dist/vue.global.prod.js"></script>
 

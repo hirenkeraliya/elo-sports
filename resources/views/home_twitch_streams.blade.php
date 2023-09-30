@@ -6,28 +6,30 @@
 
         <hr />
 
-        <div class="product-grid">
-            <div class="new-arrivals owl-carousel owl-theme">
-                @if (array_key_exists('data', $data))
-                    @foreach ($data['data'] as $elem)
+        <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-4">
+            @if (array_key_exists('data', $data))
+                @foreach ($data['data'] as $elem)
+                    <div class="col">
                         <a href="{{ route('specific_stream', ['id' => $elem['user_id']]) }}">
-                            <div class="item">
-                                <div class="card rounded-0 product-card">
-                                    <img src="{{ Str::replace('{width}x{height}', '251x141', $elem['thumbnail_url']) }}" class="card-img-top" alt="{{ $elem['title'] }}">
+                            <div class="card rounded-0">
+                                <div class="row g-0 align-items-center">
+                                    <div class="col-12">
+                                        <img src="{{ Str::replace('{width}x{height}', '251x141', $elem['thumbnail_url']) }}" class="card-img-top" alt="{{ $elem['title'] }}">
+                                    </div>
 
-                                    <div class="card-body">
-                                        <div class="product-info">
-                                            <h6 class="product-name text-ellipsis text-ellipsis mb-2 fs-6">
+                                    <div class="col-12">
+                                        <div class="card-body mt-n101">
+                                            <p class="card-text text-ellipsis text-ellipsis fs-6">
                                                 {{ $elem['title'] }}
-                                            </h6>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </a>
-                    @endforeach
-                @endif
-            </div>
+                    </div>
+                @endforeach
+            @endif
         </div>
     </div>
 </section>

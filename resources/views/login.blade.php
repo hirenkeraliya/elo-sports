@@ -6,7 +6,7 @@
             <div class="text-center">
                 <h4 class="text-dark">Log in to {{ config('app.name') }}</h4>
                 <p class="mt-4 mb-4 fs-6">
-                    Please enter your ELO Esports<br> or TVG account details below
+                    Please enter your ELO Esports<br> account details below
                 </p>
             </div>
 
@@ -38,7 +38,7 @@
 
                     <div class="col-12">
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-light text-muted" style="background-color:rgb(223, 223, 223)">
+                            <button type="submit" class="btn btn-light bg-primary text-muted1">
                                 Log in
                             </button>
                         </div>

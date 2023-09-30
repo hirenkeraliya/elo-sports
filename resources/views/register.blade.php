@@ -6,7 +6,7 @@
         <div class="text-center">
             <h4 class="text-dark">Sign up to {{ config('app.name') }}</h4>
             <p class="mt-4 mb-4 fs-6">
-                Please enter your ELO Esports<br> or TVG account details below
+                Please enter your ELO Esports<br> account details below
             </p>
         </div>
 
@@ -78,16 +78,16 @@
                 <span style="color:red">@error('profile'){{$message}}@enderror</span>
             </div>
 
-            <button type="submit" class="btn btn-light text-muted" style="background-color:rgb(223, 223, 223)">Sign up</button>
+            <button type="submit" class="btn btn-light bg-primary text-muted1">Sign up</button>
         </form>
     </div>
 </div>
 
 <div class="card-footer text-center">
     <p class="fs-6 pt-3">
-        Already have an account?
+        Already registered?
         <a href="{{ route('login') }}" class="text-primary">
-            Log in
+            Login Now
             <i class="bx bx-chevron-right1"></i>
         </a>
     </p>

@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-md-12 table-responsive">
                         <h2 style="color:#fff">My Stream List </h2>
-                        <table class="table table-dark table-responsive">
+                        <table class="table table-responsive">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
