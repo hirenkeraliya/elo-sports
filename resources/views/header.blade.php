@@ -11,12 +11,50 @@
                     <li class="nav-item active">
 						<a class="nav-link" href="/">Home</a>
                     </li>
-                    <li class="nav-item">
-						<a class="nav-link" href="{{ route('login') }}">Log in</a>
-                    </li>
-                    <li class="nav-item">
-						<a class="nav-link" href="{{ route('register') }}">Sign up</a>
-                    </li>
+					@if (auth()->check())
+						@if (auth()->check() && count(auth()->user()->roles) > 0)
+							<li class="nav-item">
+								<a class="nav-link" href="{{ route('dashboard') }}">Go To Admin</a>
+							</li>
+						@endif
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{ route('profile') }}">
+								<span>Profile</span>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{ route('my_streams.index') }}">
+								<span>My Streams</span>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{ route('my_bettings') }}">
+								<span>My Bettings</span>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{ route('my_transactions') }}">
+								<span>My Transcation</span>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{ route('logout') }}">
+								<span>Logout</span>
+							</a>
+						</li>
+					@else
+						<li class="nav-item">
+							<a class="nav-link" href="{{ route('login') }}">Log in</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ route('register') }}">Sign up</a>
+						</li>
+					@endif
                     <li class="nav-item">
 						<a class="nav-link" href="{{ route('stream.form.index') }}">Start Stream</a>
                     </li>
@@ -104,6 +142,7 @@
 							<button class="btn-close float-end"></button>
 							<h5 class="py-2 text-white">Menu</h5>
 						</div>
+
 						<ul class="navbar-nav">
 							<li class="nav-item active">
 								<a class="nav-link" href="/">Home</a>
