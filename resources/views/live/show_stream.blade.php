@@ -100,7 +100,7 @@
                                             @endif
 
 											<button type="button" class="btn btn-danger" data-bs-toggle="modal"
-												data-bs-target="#exampleModalCenter">
+												data-bs-target="#exampleModalCentercreate_bet">
 												Create Own Bet
 											</button>
 
@@ -465,7 +465,7 @@
         @method('POST')
 
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content" style="background-color: #13143e;">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Create Own Bet</h5>
                 </div>
