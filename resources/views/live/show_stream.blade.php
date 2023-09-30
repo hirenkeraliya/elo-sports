@@ -509,7 +509,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary close_bet_popup" data-bs-dismiss="modal">X</button>
+                    <button type="button" class="btn btn-secondary close_bet_popup" data-bs-dismiss="modal">Close</button>
                     <button type="button" value="Submit" class="btn btn-primary" id="submit_new_bet">Submit</button>
                 </div>
             </div>
