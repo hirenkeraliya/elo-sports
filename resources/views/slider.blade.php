@@ -19,9 +19,9 @@
                                     The Bettor Sport Network for live racing, sports wagering <br> insigts, and analysis from top personalities
                                 </p>
                                 <div class="">
-                                    <a class="btn btn-light bg-primary pb-2" href="javascript:;">
+                                    <a class="btn btn-light bg-primary pb-2" href="{{ route('stream.form.index') }}">
                                         <i class='bx bx-play'></i>
-                                        Watch Now
+                                        Start Stream
                                     </a>
                                 </div>
                             </div>
