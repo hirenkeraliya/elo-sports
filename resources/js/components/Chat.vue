@@ -1,97 +1,75 @@
 <template>
     <div>
-        <div class="modal-backdrop fade show" v-show="visibles_avatar"></div>
-
-        <div class="modal fade" id="add-avatar" :class="visibles_avatar ? 'd-block' : 'd-none'" v-show="visibles_avatar">
-            <div class="modal-dialog modal-dialog-centered">
+        <div class="modal d-block" id="add-avatar" v-if="visibles_avatar">
+            <div class="modal-dialog">
                 <div class="modal-content" style="background-color: #13143e;">
-                    <div class="modal-header">
-                        <h5 class="modal-title">
-                            Upload Avatar Image for Livestreaming
-                        </h5>
+                    <div class="modal-card">
+                        <header class="modal-header">
+                            <p class="modal-title">
+                                Upload Avatar Image for Livestreaming
+                            </p>
+                        </header>
 
-                        <button type="button" class="btn-close" @click="modelClose">
-                        </button>
-                    </div>
+                        <div class="modal-body">
+                            <figure class="mr-6 image is-64x64 is-inline-flex" v-for="(image, key) in dataImages">
+                                <a href="javascript:void(0)" @click="selectImage(image.src)">
+                                    <img :src="image.src" class="s-rounded mr-6" width="50" />
+                                </a>
+                            </figure>
 
-                    <div class="modal-body" id="model_body">
-                        <figure class="mr-6 image is-64x64 is-inline-flex" v-for="(image, key) in dataImages">
-                            <a href="javascript:void(0)" @click="selectImage(image.src)">
-                                <img :src="image.src" class="s-rounded mr-6" width="50px" />
-                            </a>
-                        </figure>
-                        <p>
-                            Upload Avatar Image for Livestreaming
-                        </p>
-                        <form @submit.prevent="submitAvatar">
-                            <div class="columns">
-                                <div class="column">
-                                    <div class="field">
-                                        <label class="label">
-                                            Something Else
-                                        </label>
-                                        <div class="control">
-                                            <figure class="mr-6 image is-128x128 is-inline-flex ">
+                            <form @submit.prevent="submitAvatar">
+                                <div class="columns">
+                                    <div class="column">
+                                        <div class="field">
+                                            <label class="label">
+                                                Something Else
+                                            </label>
 
-                                                <img :src="avatar_preview_image" v-if="avatar_preview_image" class="mr-6" />
-                                                <img src="https://bulma.io/images/placeholders/128x128.png" v-else
-                                                    class="mr-6" />
+                                            <div class="control">
+                                                <figure class="mr-6 image is-128x128 is-inline-flex">
+                                                    <img :src="avatar_preview_image" v-if="avatar_preview_image" class="mr-6" width="50" />
+                                                    <img src="https://bulma.io/images/placeholders/128x128.png" v-else
+                                                        class="mr-6" width="50" />
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
 
+                                    <div class="column">
+                                        <div class="field">
+                                            <label class="label">Avatar File</label>
+                                            <div class="control">
+                                                <input type="file" accept="image/*" v-on:change="uploadAvatarImage">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="field">
+                                            <div class="control">
+                                                <button type="submit" class="btn btn-success m-1">
+                                                    Submit
+                                                </button>
 
-
-                                            </figure>
+                                                <button class="btn btn-danger" @click="modelClose">
+                                                    Cancel
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="column">
-                                    <div class="field">
-                                        <label class="label">Avatar File</label>
-                                        <div class="control">
-                                            <input type="file" accept="image/*" v-on:change="uploadAvatarImage">
-                                        </div>
-
-                                    </div>
-                                    <div class="field ">
-                                        <div class="control">
-                                            <button class="button is-success">
-                                                Submit
-                                            </button>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-
-
-
-
-
-
-
-                        </form>
-                    </div>
-
-                    <div class="modal-footer d-inline-block">
-                        <button class="button is-danger" @click="modelClose">
-                            Cancel
-                        </button>
-
-                        <button class="modal-close is-large" aria-label="close"></button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="modal-backdrop fade show" v-show="visibles_avatar"></div>
+
         <button id="myBtn" @click="openChat()" v-if="open" title="Click to start chat">
             Chat
         </button>
 
-
         <div class="wrapper">
-
             <div class="chat-box" id="ChatBox" ref="chat_box" v-if="visibles">
                 <div class="chat-head">
                     <button type="button" class="up-avatar btn btn-danger"
@@ -306,9 +284,7 @@ export default {
 
 
     },
-    updated: function () {
-        console.log('update check when');
-    },
+
     mounted() {
 
         document.addEventListener("click", e => {
@@ -325,12 +301,10 @@ export default {
         })
         this.$nextTick(() => {
                     this.text= '';
-            console.log(this.$refs.emoji);
 
         });
 
         axios.get('/filters/').then((response) => {
-            console.log('filters-word',response.data.data)
             this.wordsToFilter = response.data.data;
         });
         var vm = this;
@@ -342,7 +316,6 @@ export default {
 
             if (vm.livestream.id === e.chat.livestreams_id) {
                 if(!this.text){
-                    console.log('lkjd');
                     this.submit_text = false;
                     this.add_image_btn = false;
                     this.$nextTick(() => {
@@ -358,9 +331,7 @@ export default {
         })
         window.Echo.channel('chat-delay').listen('.chat-delay', (e) => {
             vm.livestream = ' ';
-             console.log( vm.livestream);
             vm.livestream = e.livestream;
-            console.log( vm.livestream);
             if(e.livestream.status == 'stopped'){
                 document.getElementById('btn-bet').style.display = 'none';
                 document.getElementById('data-table').style.display = 'none';
@@ -370,11 +341,8 @@ export default {
             }
         });
         window.Echo.channel('twitch-room').listen('.twitch-room', (e) => {
-            console.log(e)
             vm.livestream = ' ';
-             console.log( vm.livestream);
             vm.livestream = e.livestream;
-            console.log( vm.livestream);
             if(e.livestream.status == 'stopped'){
                 document.getElementById('btn-bet').style.display = 'none';
                 document.getElementById('data-table').style.display = 'none';
@@ -396,9 +364,7 @@ export default {
             if(vm.text){
                 // List of spam words
                 const spamWords = this.wordsToFilter;
-                console.log('word',spamWords);
                 vm.foundWord = spamWords.find(word => this.text.toLowerCase().includes(word.toLowerCase()))
-                console.log('word111',vm.foundWord);
                 if(vm.foundWord !== null) {
                     // If found, store the spam word to display it in the message
                     vm.spamWord = vm.foundWord
@@ -412,7 +378,6 @@ export default {
     methods: {
 
         toggleItem(index) {
-         console.log(this.messages[index].isOpen)
         this.messages[index].isOpen = !this.messages[index].isOpen;
         },
         getChatMessage() {
@@ -471,7 +436,6 @@ export default {
                 vm.add_image_btn = true;
                 vm.open = false;
             }, (error) => {
-                console.log(vm.old_avatar_image);
                 vm.avatar_image_view = vm.old_avatar_image;
                 alert('please select or upload the image ');
                 vm.add_image_btn = true;
@@ -489,7 +453,6 @@ export default {
 
         async submit(e) {
             var vm = this;
-            console.log(vm.text);
             if(vm.text  == ''){
                 return alert('Please add text or file')
             }
@@ -529,9 +492,7 @@ export default {
             }).catch(error => {
 
                 if (error.response.status === 422) {
-                    console.log(error.response.data);
                     error.response.data.forEach((value, index) => {
-                      console.log(value)
                       if(value.hasOwnProperty('message')){
                             alert(value.message[0]);
 
@@ -555,14 +516,12 @@ export default {
             }
         },
         onChangeText(new_text) {
-            console.log('-------1', new_text)
             if(new_text){
              //   this.text += new_text;
             }
         },
         handleSpace(){
             if(this.text){
-                console.log(this.text,1)
                 this.filterWords();
 
             }
@@ -571,13 +530,10 @@ export default {
             this.$emit('update:input', '')
         },
         onSelectEmoji(emoji) {
-            console.log(emoji.i);
             this.text += emoji.i;
 
         },
         showEmoji(emoji) {
-            console.log(`emoji ${emoji.i} selected, check console for details`);
-            console.log(emoji);
         },
         setSelectionRange() {
             this.$nextTick(() => {
@@ -595,15 +551,13 @@ export default {
             });
         },
         openModal() {
-            document.getElementById("add-avatar").classList.add("show");
-            document.body.classList.add("modal-open");
+            document.getElementById("add-avatar").classList.add("is-active");
         },
         modelClose() {
             var vm = this;
             vm.add_image_btn = true;
 
-            document.getElementById("add-avatar").classList.remove("show");
-            document.body.classList.remove("modal-open");
+            document.getElementById("add-avatar").classList.remove("is-active");
             this.visibles = false;
             this.open = true;
         },
@@ -612,8 +566,6 @@ export default {
             vm.avatar_image_view = el;
             vm.avatar_image = el;
             vm.avatar_preview_image = this.avatar_image;
-            console.log(this.avatar_image);
-
         },
 
         async getUserLivestrea(id) {
@@ -646,15 +598,12 @@ export default {
             vm.avatar_preview_image = URL.createObjectURL(file);
             vm.avatar_image_view = URL.createObjectURL(file);
             vm.avatar_image = e.target.files[0];
-            console.log(vm.old_avatar_image);
-
         },
         updateAvatarImages() {
 
             this.visibles_avatar = true;
             this.visibles = false;
-            document.getElementById("add-avatar").classList.add("show");
-            document.body.classList.add("modal-open");
+            document.getElementById("add-avatar").classList.add("is-active");
 
             this.update_images = true;
             this.add_image_btn = true;
@@ -694,7 +643,6 @@ export default {
             // Perform any necessary actions here
         },
         uploadFile(e) {
-            console.log(e)
             this.file = e.target.files[0];
             this.text = e.target.files[0].name;
             this.attach_lists = false;
@@ -726,7 +674,6 @@ export default {
     directives: {
         focus: {
             inserted(el) {
-                console.log(el);
                 el.focus()
             },
         },
