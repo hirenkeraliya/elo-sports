@@ -1,64 +1,68 @@
 <template>
     <div>
-        <div class="modal" id="add-avatar" v-show="visibles_avatar">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">
-                        Upload Avatar Image for Livestreaming
-                    </p>
-                    <button class="delete" aria-label="close" @click="modelClose">
-                    </button>
-                </header>
-                <section class="modal-card-body">
-                    <figure class="mr-6 image is-64x64 is-inline-flex" v-for="(image, key) in dataImages">
-                        <a href="javascript:void(0)" @click="selectImage(image.src)">
-                            <img :src="image.src" class="s-rounded mr-6" />
-                        </a>
+        <div class="modal-backdrop fade show" v-show="visibles_avatar"></div>
 
-                    </figure>
-                    <p>
-                        Upload Avatar Image for Livestreaming
-                    </p>
-                    <form @submit.prevent="submitAvatar">
-                        <div class="columns">
-                            <div class="column">
-                                <div class="field">
-                                    <label class="label">
-                                        Something Else
-                                    </label>
-                                    <div class="control">
-                                        <figure class="mr-6 image is-128x128 is-inline-flex ">
+        <div class="modal fade" id="add-avatar" :class="visibles_avatar ? 'd-block' : 'd-none'" v-show="visibles_avatar">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="background-color: #13143e;">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Upload Avatar Image for Livestreaming
+                        </h5>
 
-                                            <img :src="avatar_preview_image" v-if="avatar_preview_image" class="mr-6" />
-                                            <img src="https://bulma.io/images/placeholders/128x128.png" v-else
-                                                class="mr-6" />
+                        <button type="button" class="btn-close" @click="modelClose">
+                        </button>
+                    </div>
+
+                    <div class="modal-body" id="model_body">
+                        <figure class="mr-6 image is-64x64 is-inline-flex" v-for="(image, key) in dataImages">
+                            <a href="javascript:void(0)" @click="selectImage(image.src)">
+                                <img :src="image.src" class="s-rounded mr-6" width="50px" />
+                            </a>
+                        </figure>
+                        <p>
+                            Upload Avatar Image for Livestreaming
+                        </p>
+                        <form @submit.prevent="submitAvatar">
+                            <div class="columns">
+                                <div class="column">
+                                    <div class="field">
+                                        <label class="label">
+                                            Something Else
+                                        </label>
+                                        <div class="control">
+                                            <figure class="mr-6 image is-128x128 is-inline-flex ">
+
+                                                <img :src="avatar_preview_image" v-if="avatar_preview_image" class="mr-6" />
+                                                <img src="https://bulma.io/images/placeholders/128x128.png" v-else
+                                                    class="mr-6" />
 
 
 
-                                        </figure>
+                                            </figure>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="column">
-                                <div class="field">
-                            <label class="label">Avatar File</label>
-                            <div class="control">
-                                <input  type="file" accept="image/*"  v-on:change="uploadAvatarImage">
-                            </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <label class="label">Avatar File</label>
+                                        <div class="control">
+                                            <input type="file" accept="image/*" v-on:change="uploadAvatarImage">
+                                        </div>
 
-                            </div>
-                                <div class="field ">
-                                    <div class="control">
-                                        <button class="button is-success">
-                                            Submit
-                                        </button>
                                     </div>
+                                    <div class="field ">
+                                        <div class="control">
+                                            <button class="button is-success">
+                                                Submit
+                                            </button>
+                                        </div>
 
+                                    </div>
                                 </div>
+
                             </div>
 
-                        </div>
 
 
 
@@ -67,20 +71,20 @@
 
 
 
+                        </form>
+                    </div>
 
-                    </form>
+                    <div class="modal-footer d-inline-block">
+                        <button class="button is-danger" @click="modelClose">
+                            Cancel
+                        </button>
 
-
-
-                </section>
-                <footer class="modal-card-foot">
-                    <button class="button is-danger" @click="modelClose">
-                                Cancel
-                            </button>
-                </footer>
+                        <button class="modal-close is-large" aria-label="close"></button>
+                    </div>
+                </div>
             </div>
-            <button class="modal-close is-large" aria-label="close"></button>
         </div>
+
         <button id="myBtn" @click="openChat()" v-if="open" title="Click to start chat">
             Chat
         </button>
@@ -89,13 +93,12 @@
         <div class="wrapper">
 
             <div class="chat-box" id="ChatBox" ref="chat_box" v-if="visibles">
-
-
                 <div class="chat-head">
                     <button type="button" class="up-avatar btn btn-danger"
                         style="  float: left;margin-top: 13px; margin-left: 15px;border-radius: 22px;"
                         @click="updateAvatarImages()" v-show="avatar_image_view">Edit Avatar</button>
-                        <button type="button" class="up-avatar btn btn-danger"  v-show="!avatar_image_view"  @click="joinchatRoom()" >Browse Aavatar</button>
+                    <button type="button" class="up-avatar btn btn-danger" v-show="!avatar_image_view"
+                        @click="joinchatRoom()">Browse Aavatar</button>
                     <p>{{ livestream.name }}</p>
                     <button id="close-chat" @click="closeChat()"> &#9587;</button>
                 </div>
@@ -104,7 +107,8 @@
 
                     <li class="card-body msg_card_body" v-for="(message, num) in messages">
                         <div class="d-flex justify-content-start mb-2" style="position:relative;"
-                            v-if="message.user.id != user_details.id" :ref="num === messages.length ? 'last' : undefined">
+                            v-if="message.user.id != user_details.id"
+                            :ref="num === messages.length ? 'last' : undefined">
 
                             <div class="img_cont_msg">
 
@@ -119,22 +123,23 @@
                             <div class="msg_cotainer">
 
                                 <p>
-                                    <span v-if="!message.file_type"  >
+                                    <span v-if="!message.file_type">
                                         {{ message.message.slice(0, 100) }}
                                         <i v-if="message.isOpen">
                                             {{ message.message.slice(100) }}
 
                                         </i>
-                                        <a v-if="message.message.length > 100" class="toggleBtn"  @click="toggleItem(num)" href="javascript:void(0)">Read More ...</a>
+                                        <a v-if="message.message.length > 100" class="toggleBtn"
+                                            @click="toggleItem(num)" href="javascript:void(0)">Read More ...</a>
 
 
                                     </span>
                                     <span v-if="message.file_type">
                                         Download {{ message.file_type }}
                                     </span>
-                                    <a :href="message.link + '/' + message.file" class="download-btn" title="Download file"
-                                        target="_blank" v-if="message.file_type">
-                                        <i class="fa fa-arrow-down"></i>
+                                    <a :href="message.link + '/' + message.file" class="download-btn"
+                                        title="Download file" target="_blank" v-if="message.file_type">
+                                        <i class="bx bx-arrow-down"></i>
                                     </a>
                                 </p>
 
@@ -150,18 +155,19 @@
                             :ref="num === messages.length ? 'last' : undefined">
                             <!-- <a :href="message.link + '/' + message.file" class="download-btn" title="Download file"
                                        >
-                                        <i class="fa fa-trash"></i>
+                                        <i class="bx bx-trash"></i>
                                     </a> -->
                             <div class="msg_cotainer_send">
 
                                 <p>
-                                    <span v-if="!message.file_type"  >
+                                    <span v-if="!message.file_type">
                                         {{ message.message.slice(0, 100) }}
                                         <i v-if="message.isOpen">
                                             {{ message.message.slice(100) }}
 
                                         </i>
-                                        <a v-if="message.message.length > 100" class="toggleBtn"  @click="toggleItem(num)" href="javascript:void(0)">Read More ...</a>
+                                        <a v-if="message.message.length > 100" class="toggleBtn"
+                                            @click="toggleItem(num)" href="javascript:void(0)">Read More ...</a>
 
 
                                     </span>
@@ -170,9 +176,9 @@
                                     </span>
 
 
-                                    <a :href="message.link + '/' + message.file" class="download-btn" title="Download file"
-                                        target="_blank" v-if="message.file_type">
-                                        <i class="fa fa-arrow-down"></i>
+                                    <a :href="message.link + '/' + message.file" class="download-btn"
+                                        title="Download file" target="_blank" v-if="message.file_type">
+                                        <i class="bx bx-arrow-down"></i>
                                     </a>
                                 </p>
 
@@ -180,7 +186,8 @@
                             </div>
                             <div class="img_cont_msg">
 
-                                <img :src="avatar_image_view" class="rounded-circle user_img_msg" v-if="avatar_image_view">
+                                <img :src="avatar_image_view" class="rounded-circle user_img_msg"
+                                    v-if="avatar_image_view">
 
                                 <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
                                     class="rounded-circle user_img_msg" v-else />
@@ -194,35 +201,36 @@
                 <div class="chat-text" id="chat-btm" ref="chat-btm">
                     <!-- <form ref="anyName" @submit.prevent="submit"> -->
                     <!-- <At :user_lists="userlist"> -->
-                        <textarea v-model="text" ref="chatInput" v-if="add_image_btn" @keydown.enter.prevent.stop="submit(e)"  @keydown.space="handleSpace"></textarea>
-                    <Picker  :native="true" :display-recent="false" picker-type="textarea" ref="emojis"
+                    <textarea v-model="text" ref="chatInput" v-if="add_image_btn"
+                        @keydown.enter.prevent.stop="submit(e)" @keydown.space="handleSpace"></textarea>
+                    <Picker :native="true" :display-recent="false" picker-type="textarea" ref="emojis"
                         @update:text="onChangeText" v-if="add_image_btn" @keydown.enter.prevent="submit(e)"
-                        @select="onSelectEmoji"  @keydown.space="handleSpace" />
+                        @select="onSelectEmoji" @keydown.space="handleSpace" />
 
                     <button type="button" class="send-btn" @click="submit()" v-show="add_image_btn">
-                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                        <i class="bx bx-paper-plane" aria-hidden="true"></i>
                     </button>
-                    <button type="button" class="attach-btn" @click="attach_lists = !attach_lists" v-show="add_image_btn">
-                        <i class="fa fa-file" aria-hidden="true"></i>
+                    <button type="button" class="attach-btn" @click="attach_lists = !attach_lists"
+                        v-show="add_image_btn">
+                        <i class="bx bx-file" aria-hidden="true"></i>
                     </button>
-                    <input type="file" ref="fileInput" :accept="this.accept" style="display: none" @change="uploadFile"
-                        >
+                    <input type="file" ref="fileInput" :accept="this.accept" style="display: none" @change="uploadFile">
                     <transition name="fade">
                         <ul class="file-btn-lists" v-show="attach_lists">
 
                             <li title="Upload image" :class="[(this.file_type == 'image') ? 'active' : '']">
-                                <a @click="handleUploadClick('image')"  v-show="add_image_btn">
-                                    <i class="fa fa-picture-o" aria-hidden="true"></i>
+                                <a @click="handleUploadClick('image')" v-show="add_image_btn">
+                                    <i class="bx bx-picture-o" aria-hidden="true"></i>
                                 </a>
                             </li>
                             <li title="Upload Video" :class="[(this.file_type == 'video') ? 'active' : '']">
-                                <a @click="handleUploadClick('video')"  v-show="add_image_btn">
-                                    <i class="fa fa-file-video-o" aria-hidden="true"></i>
+                                <a @click="handleUploadClick('video')" v-show="add_image_btn">
+                                    <i class="bx bx-file-video-o" aria-hidden="true"></i>
                                 </a>
                             </li>
                             <li title="Upload Pdf" :class="[(this.file_type == 'pdf') ? 'active' : '']">
-                                <a @click="handleUploadClick('pdf')"  v-show="add_image_btn">
-                                    <i class="fa fa-file-pdf-o " aria-hidden="true"></i>
+                                <a @click="handleUploadClick('pdf')" v-show="add_image_btn">
+                                    <i class="bx bx-file-pdf-o " aria-hidden="true"></i>
                                 </a>
                             </li>
                         </ul>
@@ -587,14 +595,15 @@ export default {
             });
         },
         openModal() {
-            document.getElementById("add-avatar").classList.add("is-active");
+            document.getElementById("add-avatar").classList.add("show");
+            document.body.classList.add("modal-open");
         },
         modelClose() {
             var vm = this;
             vm.add_image_btn = true;
 
-            document.getElementById("add-avatar").classList.remove("is-clipped");
-            document.getElementById("add-avatar").classList.remove("is-active");
+            document.getElementById("add-avatar").classList.remove("show");
+            document.body.classList.remove("modal-open");
             this.visibles = false;
             this.open = true;
         },
@@ -644,7 +653,8 @@ export default {
 
             this.visibles_avatar = true;
             this.visibles = false;
-            document.getElementById("add-avatar").classList.add("is-active");
+            document.getElementById("add-avatar").classList.add("show");
+            document.body.classList.add("modal-open");
 
             this.update_images = true;
             this.add_image_btn = true;
