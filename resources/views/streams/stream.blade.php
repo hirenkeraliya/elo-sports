@@ -1092,7 +1092,7 @@
 
             var options = {
                 width: '100%',
-                height: '100%',
+                height: 380,
                 @if(isset($data['data'][0]['user_login']))
                 channel: "{{$data['data'][0]['user_login']}}",
                 @endif
