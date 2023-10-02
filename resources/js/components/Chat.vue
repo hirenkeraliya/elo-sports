@@ -65,7 +65,7 @@
 
         <div class="modal-backdrop fade show" v-show="visibles_avatar"></div>
 
-        <button id="myBtn" @click="openChat()" v-if="open" title="Click to start chat">
+        <button class="chat-btn btn btn-danger" id="myBtn" @click="openChat()" v-if="open" title="Click to start chat">
             Chat
         </button>
 

@@ -1530,3 +1530,4 @@ body.bg-theme15 {
  /* width: 50px; */
   overflow: hidden;
   text-overflow: ellipsis; }
+.chat-btn {position: sticky; bottom:50px; align-self: flex-end; right: 10px; float:right;}
