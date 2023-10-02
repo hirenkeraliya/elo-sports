@@ -630,9 +630,8 @@
 					<input type="hidden" name="bet_amount" id="bet_amount" value="">
 					<input type="hidden" name="bet_total_amount" id="bet_total_amount" value="">
 
-                        <button type="button" value="Submit" class="btn btn-success" id="submit_bet">Submit</button>
-                    </div>
-
+                    <button type="button" value="Submit" class="btn btn-success" id="submit_bet">Submit</button>
+                </div>
             </div>
         </div>
     </div>
@@ -648,7 +647,7 @@
                 <div class="modal-body" id="model_body">
                     <div class="mb-3">
                         <label for="purchase_elo" class="form-label">Enter ELO</label>
-                        <input type="number" class="form-control" id="purchase_elo" placeholder="How luch ELO you want to purchase?">
+                        <input type="number" class="form-control" id="purchase_elo" placeholder="How much ELO you want to purchase?">
                         <small id="calcELO" class="text-muted"></small>
                     </div>
                 </div>

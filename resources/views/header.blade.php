@@ -132,7 +132,7 @@
 
 				<div class="col col-md-auto order-2 order-md-4">
 					<div class="logo d-lg-none d-lg-flex">
-						<a href="index.php">
+						<a href="/">
 							<img src="{{ asset('assets/front/images/logo.png') }}" class="logo" alt="Logo">
 						</a>
 					</div>
