@@ -161,8 +161,8 @@
                                                                     </div>
 
                                                                     <div class="col-md-6 assign_room">
-                                                                        <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary" value="Submit">
-                                                                        <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary" value="Cancel">
+                                                                        <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary mr-3 mt-3" value="Submit">
+                                                                        <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary mt-3" value="Cancel">
                                                                     </div>
                                                                 </form>
                                                             </div>
@@ -224,8 +224,8 @@
                                                                 </div>
 
                                                                 <div class="col-md-6 assign_room">
-                                                                    <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary" value="Submit">
-                                                                    <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary" value="Cancel">
+                                                                    <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary mr-3 mt-3" value="Submit">
+                                                                    <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary mt-3" value="Cancel">
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -525,7 +525,7 @@
             <div class="modal-content" style="background-color: #13143e;">
                 <div class="modal-header" style="background: #d9140d;color: #fff;">
                     <h5 class="modal-title" id="exampleModalLongTitle">Bet Now</h5>
-                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                     <button type="button" class="btn-close bet_close_model" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
 
