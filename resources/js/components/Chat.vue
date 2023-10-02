@@ -115,9 +115,10 @@
                                     <span v-if="message.file_type">
                                         Download {{ message.file_type }}
                                     </span>
+
                                     <a :href="message.link + '/' + message.file" class="download-btn"
                                         title="Download file" target="_blank" v-if="message.file_type">
-                                        <i class="bx bx-arrow-down"></i>
+                                        <i class="bx lni-download" style="font-size: 24px;"></i>
                                     </a>
                                 </p>
 
@@ -156,7 +157,7 @@
 
                                     <a :href="message.link + '/' + message.file" class="download-btn"
                                         title="Download file" target="_blank" v-if="message.file_type">
-                                        <i class="bx bx-arrow-down"></i>
+                                        <i class="bx lni-download" style="font-size: 24px;"></i>
                                     </a>
                                 </p>
 
@@ -195,7 +196,7 @@
                     </button>
                     <input type="file" ref="fileInput" :accept="this.accept" style="display: none" @change="uploadFile">
                     <transition name="fade">
-                        <ul class="file-btn-lists" v-show="attach_lists">
+                        <ul class="file-btn-lists" v-show="attach_lists" style="list-style: none;">
                             <li title="Upload image" :class="[(this.file_type == 'image') ? 'active' : '']">
                                 <a @click="handleUploadClick('image')" v-show="add_image_btn">
                                     <i class="bx bx-upload" style="font-size: 20px;" aria-hidden="true"></i>

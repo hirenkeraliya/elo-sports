@@ -7,7 +7,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 table-responsive">
-                        <h2 style="color:#fff">My Batting</h2>
+                        <h2 style="color:#fff">My Bettings</h2>
 
                         <table class="table table-responsive">
                             <thead>
@@ -71,7 +71,7 @@
                                         @if(!$result->livestreams->type && $result->livestreams->status != "stopped")
                                             <a href="{{ url('stream/'.$result->livestreams->id)}}">View</a>
                                         @else
-                                            <a href="javascript:void(0)">End</a>
+                                            Ended
                                         @endif
                                         </td>
                                     </tr>

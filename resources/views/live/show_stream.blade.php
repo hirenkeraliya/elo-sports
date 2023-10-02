@@ -29,6 +29,10 @@
                     </div>
                 @endif
 
+                <h3 class="text-light">
+                    {{ isset($livestream) ? $livestream->name : '' }}
+                </h3>
+
                 <div class="section-authentication-signin1 d-flex align-items-center justify-content-center my-5 my-lg-0">
                     <video id="player" class="video-js" controls autoplay preload="auto" width="1280" height="720" data-setup="{}">
                         <source src=" {{ env('RMPT_STREAMING_LINK').'/'.$livestream->stream_id }}.m3u8" type="application/x-mpegURL" res="9999" label="auto" />

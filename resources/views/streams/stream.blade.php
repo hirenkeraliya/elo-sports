@@ -27,6 +27,10 @@
                     </div>
                 @endif
 
+                <h3 class="text-light">
+                    {{ isset($data['data'][0]) ? $data['data'][0]['user_login'] : '' }}'s stream
+                </h3>
+
                 <div class="section-authentication-signin1 d-flex align-items-center justify-content-center my-5 my-lg-0">
                     <div id="SamplePlayerDivID"></div>
                 </div>
@@ -43,8 +47,6 @@
                                     <p class="text-light stream">Stream Stats</p>
 
                                     <ul>
-                                        <li class="text-light">Title: {{ $data['data'][0]['user_login'] }}'s stream</li>
-
                                         @if ($l_name !='')
                                             <li class="text-light">Game Label: {{ $label_name }}</li>
                                         @endif

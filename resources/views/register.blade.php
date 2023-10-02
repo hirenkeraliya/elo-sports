@@ -13,20 +13,6 @@
         <form id="register" action="{{ route('register') }}" method="post" class="row g-3" enctype="multipart/form-data">
             @csrf
 
-            @if($errors->any())
-                @foreach ($errors->all() as $error)
-                    <div class="text-danger">{{ $error }}</div>
-                @endforeach
-            @endif
-
-            @if(session()->has('error'))
-                <div class="text-danger">{{ session()->get('error') }}</div>
-            @endif
-
-            @if(session()->has('error'))
-                <div class="text-danger">{{ session()->get('error') }}</div>
-            @endif
-
             <div class="col-sm-6">
                 <label for="firstname" class="form-label">First Name: </label>
                 <input type="text" name="firstname" id="firstname" class="form-control"
