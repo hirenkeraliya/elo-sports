@@ -32,7 +32,7 @@
 
 						<li class="nav-item">
 							<a class="nav-link" href="{{ route('my_bettings') }}">
-								<span>My Bettings</span>
+								<span>My Betting</span>
 							</a>
 						</li>
 
@@ -114,11 +114,11 @@
 									</a>
 
 									<a class="dropdown-item d-flex allign-items-center" href="{{ route('my_bettings') }}">
-										<span>My Bettings</span>
+										<span>My Betting</span>
 									</a>
 
 									<a class="dropdown-item d-flex allign-items-center" href="{{ route('my_transactions') }}">
-										<span>My Transcation</span>
+										<span>My Transaction</span>
 									</a>
 
 									<a class="dropdown-item d-flex allign-items-center" href="{{ route('logout') }}">

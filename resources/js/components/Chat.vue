@@ -11,7 +11,7 @@
                         </header>
 
                         <div class="modal-body">
-                            <figure class="mr-6 image is-64x64 is-inline-flex" v-for="(image, key) in dataImages">
+                            <figure class="mr-6 image is-64x64 d-inline" v-for="(image, key) in dataImages">
                                 <a href="javascript:void(0)" @click="selectImage(image.src)">
                                     <img :src="image.src" class="s-rounded mr-6" width="50" />
                                 </a>
@@ -49,7 +49,7 @@
                                                     Submit
                                                 </button>
 
-                                                <button class="btn btn-danger" @click="modelClose">
+                                                <button type="button" class="btn btn-danger" @click="modelClose">
                                                     Cancel
                                                 </button>
                                             </div>
@@ -65,7 +65,7 @@
 
         <div class="modal-backdrop fade show" v-show="visibles_avatar"></div>
 
-        <button id="myBtn" @click="openChat()" v-if="open" title="Click to start chat">
+        <button id="myBtn" class="chat-btn btn btn-danger" @click="openChat()" v-if="open" title="Click to start chat">
             Chat
         </button>
 
@@ -181,9 +181,10 @@
                     <!-- <At :user_lists="userlist"> -->
                     <textarea v-model="text" ref="chatInput" v-if="add_image_btn"
                         @keydown.enter.prevent.stop="submit(e)" @keydown.space="handleSpace"></textarea>
+
                     <Picker :native="true" :display-recent="false" picker-type="textarea" ref="emojis"
                         @update:text="onChangeText" v-if="add_image_btn" @keydown.enter.prevent="submit(e)"
-                        @select="onSelectEmoji" @keydown.space="handleSpace" />
+                        @select="onSelectEmoji" @keydown.space="handleSpace" style="height: 100%; width: 100%;" />
 
                     <button type="button" class="send-btn" @click="submit()" v-show="add_image_btn">
                         <i class="bx bx-paper-plane" aria-hidden="true"></i>
@@ -195,20 +196,19 @@
                     <input type="file" ref="fileInput" :accept="this.accept" style="display: none" @change="uploadFile">
                     <transition name="fade">
                         <ul class="file-btn-lists" v-show="attach_lists">
-
                             <li title="Upload image" :class="[(this.file_type == 'image') ? 'active' : '']">
                                 <a @click="handleUploadClick('image')" v-show="add_image_btn">
-                                    <i class="bx bx-picture-o" aria-hidden="true"></i>
+                                    <i class="bx bx-upload" style="font-size: 20px;" aria-hidden="true"></i>
                                 </a>
                             </li>
                             <li title="Upload Video" :class="[(this.file_type == 'video') ? 'active' : '']">
                                 <a @click="handleUploadClick('video')" v-show="add_image_btn">
-                                    <i class="bx bx-file-video-o" aria-hidden="true"></i>
+                                    <i class="bx bxs-video" style="font-size: 20px;" aria-hidden="true"></i>
                                 </a>
                             </li>
                             <li title="Upload Pdf" :class="[(this.file_type == 'pdf') ? 'active' : '']">
                                 <a @click="handleUploadClick('pdf')" v-show="add_image_btn">
-                                    <i class="bx bx-file-pdf-o " aria-hidden="true"></i>
+                                    <i class="bx bxs-file-pdf" style="font-size: 20px;" aria-hidden="true"></i>
                                 </a>
                             </li>
                         </ul>
@@ -551,14 +551,13 @@ export default {
             });
         },
         openModal() {
-            document.getElementById("add-avatar").classList.add("is-active");
+            //
         },
         modelClose() {
             var vm = this;
             vm.add_image_btn = true;
-
-            document.getElementById("add-avatar").classList.remove("is-active");
-            this.visibles = false;
+            this.visibles = true;
+            this.visibles_avatar = false;
             this.open = true;
         },
         selectImage(el) {
@@ -603,7 +602,6 @@ export default {
 
             this.visibles_avatar = true;
             this.visibles = false;
-            document.getElementById("add-avatar").classList.add("is-active");
 
             this.update_images = true;
             this.add_image_btn = true;

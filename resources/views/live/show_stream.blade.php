@@ -15,6 +15,20 @@
     <div class="page-content">
         <section class="py-0 py-lg-5">
             <div class="container">
+                @if(session()->get('success'))
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>{{session()->get('success')}}</strong>
+                    </div>
+                @endif
+
+                @if(session()->get('error'))
+                    <div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>{{session()->get('error')}}</strong>
+                    </div>
+                @endif
+
                 <div class="section-authentication-signin1 d-flex align-items-center justify-content-center my-5 my-lg-0">
                     <video id="player" class="video-js" controls autoplay preload="auto" width="1280" height="720" data-setup="{}">
                         <source src=" {{ env('RMPT_STREAMING_LINK').'/'.$livestream->stream_id }}.m3u8" type="application/x-mpegURL" res="9999" label="auto" />
@@ -134,62 +148,60 @@
                                                     </form>
                                                 </div>
                                             @elseif ($count_bet == 4 && $count_bet <> 0 && $count_bet != 2 && $count_bet != 3)
-                                                <div class="col-md-4">
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-                                                            <h5 class="text-light mt-1">Room Name: Anonymous </h5>
+                                                <div class="row">
+                                                    <h5 class="text-light mt-1">Room Name: Anonymous </h5>
 
-                                                            <button class="btn btn-link" id="change_room">Change Room Name</button>
-                                                        </div>
+                                                    <div class="col-md-8">
+                                                        <button class="btn btn-link btn-sm w-5" id="change_room">Change Room Name</button>
+                                                    </div>
 
-                                                        <div class="col-md-12">
-                                                            <div id="show_room">
-                                                                <form action="{{ route('update.room') }}" method="post">
-                                                                    @csrf
-                                                                    <input type="hidden" name="game_id" value="{{ $livestream->id }}">
-
-                                                                    <div class="col-md-6">
-                                                                        <select name="change_room" id="select_game_room" class="btn btn-primary dropdown-toggle text-light">
-                                                                            <option value="0" disabled>-Select Room--</option>
-
-                                                                            @foreach($user_room_names as $room)
-                                                                                <option value="{{$room->id}}">{{$room->room_name}}</option>
-                                                                            @endforeach
-
-                                                                            <option value="new_room">New Room</option>
-                                                                        </select>
-                                                                    </div>
-
-                                                                    <div class="col-md-6 assign_room">
-                                                                        <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary mr-3 mt-3" value="Submit">
-                                                                        <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary mt-3" value="Cancel">
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-
-                                                        <div id="show_new_room" class="add_room">
-                                                            <form action="{{ route('select.new.room.update') }}" method="post">
+                                                    <div class="col-md-12">
+                                                        <div id="show_room">
+                                                            <form action="{{ route('update.room') }}" method="post">
                                                                 @csrf
+                                                                <input type="hidden" name="game_id" value="{{ $livestream->id }}">
 
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <input type="hidden" name="game_id" value="{{ basename(request()->path()) }}">
-                                                                        <textarea type="text" name="room_name" class="form-control" placeholder="Enter Room Name only 200 charecter allowed" id="second_new_room_txt"></textarea>
-                                                                    </div>
+                                                                <div class="col-md-6">
+                                                                    <select name="change_room" id="select_game_room" class="btn btn-primary dropdown-toggle text-light">
+                                                                        <option value="0" disabled>-Select Room--</option>
 
-                                                                    <div class="col-md-6">
-                                                                        <div class="col-md-6">
-                                                                            <input type="submit" name="second_new_room" class="btn btn-primary" id="second_new_room_btn" value="Submit">
-                                                                        </div>
+                                                                        @foreach($user_room_names as $room)
+                                                                            <option value="{{$room->id}}">{{$room->room_name}}</option>
+                                                                        @endforeach
 
-                                                                        <div class="col-md-6">
-                                                                            <input type="button" name="cancel_select_new_room" class="btn btn-secondary" id="cancel_select_new_room" value="cancel">
-                                                                        </div>
-                                                                    </div>
+                                                                        <option value="new_room">New Room</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="col-md-6 assign_room">
+                                                                    <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary mr-3 mt-3" value="Submit">
+                                                                    <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary mt-3" value="Cancel">
                                                                 </div>
                                                             </form>
                                                         </div>
+                                                    </div>
+
+                                                    <div id="show_new_room" class="add_room">
+                                                        <form action="{{ route('select.new.room.update') }}" method="post">
+                                                            @csrf
+
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <input type="hidden" name="game_id" value="{{ basename(request()->path()) }}">
+                                                                    <textarea type="text" name="room_name" class="form-control" placeholder="Enter Room Name only 200 charecter allowed" id="second_new_room_txt"></textarea>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="col-md-6">
+                                                                        <input type="submit" name="second_new_room" class="btn btn-primary" id="second_new_room_btn" value="Submit">
+                                                                    </div>
+
+                                                                    <div class="col-md-6">
+                                                                        <input type="button" name="cancel_select_new_room" class="btn btn-secondary" id="cancel_select_new_room" value="cancel">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             @elseif ($count_bet == 1 && $count_bet <> 0 && $count_bet != 2)
@@ -981,7 +993,7 @@
 
             $('#betting_amount').on('change', function () {
                 var val = $(this).val();
-                var html = $('#betting_amount :selected').text();
+                var html = parseFloat($('#betting_amount :selected').text());
                 if (val == '0') {
                     $('#custom_p').show();
                     $('#custom_amount').val('');
@@ -1020,19 +1032,14 @@
                                 if (data['update_html'] == 1) {
                                     $('#active_bet_list').html(data['html']);
                                 }
+
                                 if (data['msg1'] == 0) {
                                     alert(data['msg2']);
                                     $('#exampleModalCenter').modal('hide');
                                     $('#elo_purchase').show();
-                                    //location.reload();
                                 } else {
                                     alert(data['msg2']);
-                                    // $('#exampleModalCenter').modal('hide');
-                                    // location.reload();
-
                                     $('.bet_close_model').trigger("click");
-
-                                    // $('#elo_purchase').hide();
                                 }
                             }
                         });
@@ -1046,15 +1053,13 @@
 
             $('body').on('click', '#submit_new_bet', function () {
                 var betting_id = parseInt($('#betting_amount').val());
-                var custom_amount = parseInt($('#custom_amount').val());
+                var custom_amount = parseInt($('#custom_amount').val() ? $('#custom_amount').val() : 0);
                 var for_text = $('#for_text').val();
                 var against_text = $('#against_text').val();
                 var description = $('#description').val();
                 var game_id = $('#game_id').val();
-                // alert(bet_amt);
-                // ------------------
-                if (custom_amount > 0) {
 
+                if (custom_amount > 0) {
                     if ((custom_amount > 99) && (custom_amount < 10001)) {
                         if (for_text.length > 0) {
                             if (against_text.length > 0) {
@@ -1072,23 +1077,19 @@
                                         },
                                         dataType: 'JSON',
                                         success: function (data) {
+                                            console.log(data);
                                             if (data['update_html'] == 1) {
                                                 $('#active_bet_list').html(data['html']);
                                             }
                                             if (data['msg1'] == 0) {
                                                 alert(data['msg2']);
-                                                // $('#exampleModalCenter').modal('hide');
                                                 $('#elo_purchase').show();
-                                                //location.reload();
                                             } else {
                                                 alert(data['msg2']);
-                                                // $('#exampleModalCenter').modal('hide');
                                                 $('.empty_input').val('');
                                                 $('.empty_input').val('');
                                                 $(".empty_select").val($(".empty_select option").eq(1).val());
                                                 $('.close_bet_popup').trigger("click");
-                                                //location.reload();
-                                                // $('#elo_purchase').hide();
                                             }
                                         }
                                     });
