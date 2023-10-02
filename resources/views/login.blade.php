@@ -19,7 +19,8 @@
                             Enter Username
                         </label>
 
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                        <span style="color:red">@error('username'){{$message}}@enderror</span>
                     </div>
 
                     <div class="col-12">
@@ -28,12 +29,14 @@
                         </label>
 
                         <div class="input-group" id="show_hide_password">
-                            <input type="password" class="form-control border-end-0" id="password" name="password" placeholder="Enter Password">
+                            <input type="password" class="form-control border-end-0" id="password" name="password" placeholder="Enter Password" required>
 
                             <a href="javascript:;" class="input-group-text bg-transparent text-primary fs-10" onclick="togglePassword()">
                                 <i class="bx bx-hide1">SHOW</i>
                             </a>
                         </div>
+
+                        <span style="color:red">@error('password'){{$message}}@enderror</span>
                     </div>
 
                     <div class="col-12">
