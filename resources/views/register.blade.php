@@ -16,26 +16,26 @@
             <div class="col-sm-6">
                 <label for="firstname" class="form-label">First Name: </label>
                 <input type="text" name="firstname" id="firstname" class="form-control"
-                        value="{{old('firstname')}}">
+                        value="{{old('firstname')}}" required>
                 <span style="color:red">@error('firstname'){{$message}}@enderror</span>
             </div>
 
             <div class="col-sm-6">
                 <label for="lastname" class="form-label">Last Name: </label>
-                <input type="text" name="lastname" id="lastname" class="form-control" value="{{old('lastname')}}">
+                <input type="text" name="lastname" id="lastname" class="form-control" value="{{old('lastname')}}" required>
                 <span style="color:red">@error('lastname'){{$message}}@enderror</span>
             </div>
 
             <div class="col-sm-6">
                 <label for="email" class="form-label">Email: </label>
-                <input type="email" name="email" id="email" class="form-control" value="{{old('email')}}">
+                <input type="email" name="email" id="email" class="form-control" value="{{old('email')}}" required>
 
                 <span style="color:red">@error('email'){{$message}}@enderror</span>
             </div>
 
             <div class="col-sm-6">
                 <label for="username" class="form-label">Username: </label>
-                <input type="text" name="username" id="username" class="form-control" value="{{old('username')}}">
+                <input type="text" name="username" id="username" class="form-control" value="{{old('username')}}" required>
                 <span style="color:red">@error('username'){{$message}}@enderror</span>
             </div>
 
@@ -48,7 +48,7 @@
             <div class="col-sm-6">
                 <label for="inputChoosePassword" class="form-label">Password:</label>
                 <div class="input-group" id="show_hide_password">
-                    <input type="password" class="form-control border-end-0" id="inputChoosePassword" placeholder="Enter Password">
+                    <input type="password" class="form-control border-end-0" id="inputChoosePassword" placeholder="Enter Password" required>
                     <a href="javascript:;" class="input-group-text bg-transparent text-primary fs-10" onclick="togglePassword()">SHOW</a>
                 </div>
 
