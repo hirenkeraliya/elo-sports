@@ -7,7 +7,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 table-responsive">
-                        <h2 style="color:#fff">My Battings</h2>
+                        <h2 style="color:#fff">My Bettings</h2>
 
                         <table class="table table-responsive">
                             <thead>
@@ -45,7 +45,9 @@
                                         <td>{{ $result->amount }}</td>
                                         <td>{{ $result->vig_amount }}</td>
                                         <td>{{ $result->win_amount }}</td>
-                                        @php $winAmount +=$result->win_amount @endphp
+                                        @php
+                                            $winAmount += $result->win_amount;
+                                        @endphp
                                         @php $vigAmount +=$result->vig_amount @endphp
                                         @php $amount +=$result->amount @endphp
                                         <td>
@@ -66,10 +68,10 @@
                                         @endif</td>
                                         <td>{{ date('Y-m-d h:i:s A',strtotime($result->created_at)) }}</td>
                                         <td>
-                                        @if(!$result->livestreams->type)
-                                        <a href="{{ url('stream/'.$result->livestreams->id)}}">View</a>
+                                        @if(!$result->livestreams->type && $result->livestreams->status != "stopped")
+                                            <a href="{{ url('stream/'.$result->livestreams->id)}}">View</a>
                                         @else
-                                            <a href="javascript:void(0)">End</a>
+                                            Ended
                                         @endif
                                         </td>
                                     </tr>

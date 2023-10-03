@@ -9,7 +9,7 @@
 
             <div class="carousel-inner">
                 <div class="carousel-item active"
-                    style="background-image:url('assets/front/images/slid1.png');background-size: cover;background-repeat: no-repeat;">
+                    style="background-image:url('assets/front/images/slid1.jpg');background-size: cover;background-repeat: no-repeat;">
                     <div class="row d-flex align-items-center">
                         <div class="col d-none d-lg-flex justify-content-center mt-5">
                             <div class="  pt-5 mb-4">

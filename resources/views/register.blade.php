@@ -13,43 +13,29 @@
         <form id="register" action="{{ route('register') }}" method="post" class="row g-3" enctype="multipart/form-data">
             @csrf
 
-            @if($errors->any())
-                @foreach ($errors->all() as $error)
-                    <div class="text-danger">{{ $error }}</div>
-                @endforeach
-            @endif
-
-            @if(session()->has('error'))
-                <div class="text-danger">{{ session()->get('error') }}</div>
-            @endif
-
-            @if(session()->has('error'))
-                <div class="text-danger">{{ session()->get('error') }}</div>
-            @endif
-
             <div class="col-sm-6">
                 <label for="firstname" class="form-label">First Name: </label>
                 <input type="text" name="firstname" id="firstname" class="form-control"
-                        value="{{old('firstname')}}">
+                        value="{{old('firstname')}}" required>
                 <span style="color:red">@error('firstname'){{$message}}@enderror</span>
             </div>
 
             <div class="col-sm-6">
                 <label for="lastname" class="form-label">Last Name: </label>
-                <input type="text" name="lastname" id="lastname" class="form-control" value="{{old('lastname')}}">
+                <input type="text" name="lastname" id="lastname" class="form-control" value="{{old('lastname')}}" required>
                 <span style="color:red">@error('lastname'){{$message}}@enderror</span>
             </div>
 
             <div class="col-sm-6">
                 <label for="email" class="form-label">Email: </label>
-                <input type="email" name="email" id="email" class="form-control" value="{{old('email')}}">
+                <input type="email" name="email" id="email" class="form-control" value="{{old('email')}}" required>
 
                 <span style="color:red">@error('email'){{$message}}@enderror</span>
             </div>
 
             <div class="col-sm-6">
                 <label for="username" class="form-label">Username: </label>
-                <input type="text" name="username" id="username" class="form-control" value="{{old('username')}}">
+                <input type="text" name="username" id="username" class="form-control" value="{{old('username')}}" required>
                 <span style="color:red">@error('username'){{$message}}@enderror</span>
             </div>
 
@@ -60,8 +46,12 @@
             </div>
 
             <div class="col-sm-6">
-                <label for="password" class="form-label">Password: </label>
-                <input type="password" name="password" id="password" class="form-control">
+                <label for="inputChoosePassword" class="form-label">Password:</label>
+                <div class="input-group" id="show_hide_password">
+                    <input type="password" class="form-control border-end-0" id="inputChoosePassword" placeholder="Enter Password" required>
+                    <a href="javascript:;" class="input-group-text bg-transparent text-primary fs-10" onclick="togglePassword()">SHOW</a>
+                </div>
+
                 <span style="color:red">@error('password'){{$message}}@enderror</span>
             </div>
 
@@ -92,4 +82,17 @@
         </a>
     </p>
 </div>
+@endsection
+
+@section('js')
+    <script>
+        function togglePassword() {
+            if (document.getElementById('inputChoosePassword').type == "text") {
+                document.getElementById('inputChoosePassword').type = "password";
+                return;
+            }
+
+            document.getElementById('inputChoosePassword').type = "text";
+        }
+    </script>
 @endsection

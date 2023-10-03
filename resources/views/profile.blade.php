@@ -193,7 +193,7 @@
 @endsection
 
 @section('js')
-    <script src="https://www.paypal.com/sdk/js?client-id=AeGZhGGL1OHC1WAq9jmXBlWMgAjdOfwpVmo14E5HEu_Lm0_X4lrgUSitPZXxKeY2Srf_l8As6CNXtsbY&currency=USD"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id={{ \Crypt::decryptString($setting->client_id) }}&currency=USD"></script>
     <script type="text/javascript">
         $('#completion-block').hide();
 

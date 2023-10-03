@@ -118,7 +118,7 @@
 									</a>
 
 									<a class="dropdown-item d-flex allign-items-center" href="{{ route('my_transactions') }}">
-										<span>My Transcation</span>
+										<span>My Transaction</span>
 									</a>
 
 									<a class="dropdown-item d-flex allign-items-center" href="{{ route('logout') }}">
@@ -132,7 +132,7 @@
 
 				<div class="col col-md-auto order-2 order-md-4">
 					<div class="logo d-lg-none d-lg-flex">
-						<a href="index.php">
+						<a href="/">
 							<img src="{{ asset('assets/front/images/logo.png') }}" class="logo" alt="Logo">
 						</a>
 					</div>

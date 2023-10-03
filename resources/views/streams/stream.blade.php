@@ -27,8 +27,12 @@
                     </div>
                 @endif
 
+                <h3 class="text-light">
+                    {{ isset($data['data'][0]) ? $data['data'][0]['user_login'] : '' }}'s stream
+                </h3>
+
                 <div class="section-authentication-signin1 d-flex align-items-center justify-content-center my-5 my-lg-0">
-                    <div id="SamplePlayerDivID"></div>
+                    <div id="SamplePlayerDivID" style="width: 100%; height: 100%;"></div>
                 </div>
             </div>
         </section>
@@ -43,8 +47,6 @@
                                     <p class="text-light stream">Stream Stats</p>
 
                                     <ul>
-                                        <li class="text-light">Title: {{ $data['data'][0]['user_login'] }}'s stream</li>
-
                                         @if ($l_name !='')
                                             <li class="text-light">Game Label: {{ $label_name }}</li>
                                         @endif
@@ -138,11 +140,11 @@
                                             <!-- user having room in user table -->
                                             @elseif ($count_bet == 4 && $count_bet <> 0 && $count_bet != 2 && $count_bet != 3)
                                                 <div class="row">
-                                                    <div class="col-md-12">
-                                                        <span class="text-light">
-                                                            Room Name: Anonymous
-                                                        </span>
+                                                    <span class="text-light">
+                                                        Room Name: Anonymous
+                                                    </span>
 
+                                                    <div class="col-md-8">
                                                         <button class="btn btn-link" id="change_room">Change Room Name</button>
                                                         <hr>
                                                     </div>
@@ -164,8 +166,8 @@
                                                                 </div>
 
                                                                 <div class="col-md-6 assign_room">
-                                                                    <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary" value="Submit">
-                                                                    <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary" value="Cancel">
+                                                                    <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary mr-3 mt-3" value="Submit">
+                                                                    <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary mt-3" value="Cancel">
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -222,8 +224,8 @@
                                                                 </div>
 
                                                                 <div class="col-md-6 assign_room">
-                                                                    <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary" value="Submit">
-                                                                    <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary" value="Cancel">
+                                                                    <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary mr-3 mt-3" value="Submit">
+                                                                    <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary mt-3" value="Cancel">
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -499,7 +501,7 @@
                 <div class="mb-3">
                     <label for="purchase_elo" class="form-label">Enter ELO</label>
                     <input type="number" class="form-control" id="purchase_elo"
-                        placeholder="How luch ELO you want to purchase?">
+                        placeholder="How much ELO you want to purchase?">
                     <small id="calcELO" class="text-muted"></small>
                 </div>
             </div>
@@ -556,7 +558,7 @@
 <div class="modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="background-color: #13143e;">
             <div class="modal-header" style="background: #d9140d;color: #fff;">
                 <h5 class="modal-title" id="exampleModalLongTitle">Bet Now</h5>
 
@@ -763,7 +765,7 @@
 
         $('#betting_amount').on('change', function () {
             var val = $(this).val();
-            var html = $('#betting_amount :selected').text();
+            var html = parseFloat($('#betting_amount :selected').text());
             if (val == '0') {
                 $('#custom_p').show();
                 $('#custom_amount').val('');
@@ -777,7 +779,7 @@
         $('body').on('click', '#submit_new_bet', function () {
 
             var betting_id = parseInt($('#betting_amount').val());
-            var custom_amount = parseInt($('#custom_amount').val());
+            var custom_amount = parseInt($('#custom_amount').val() ? $('#custom_amount').val() : 0);
 
             var for_text = $('#for_text').val();
             var against_text = $('#against_text').val();
@@ -1089,7 +1091,7 @@
             });
 
             var options = {
-                width: 1100,
+                width: '100%',
                 height: 380,
                 @if(isset($data['data'][0]['user_login']))
                 channel: "{{$data['data'][0]['user_login']}}",

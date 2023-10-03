@@ -75,7 +75,7 @@ class LabelController extends Controller
                 $upd->username = auth()->user()->username;
 
                 if($upd->save()) {
-                    return back()->with('success', 'Game Label Added Successfullt!!!');
+                    return back()->with('success', 'Game Label Added Successfully!');
                 } else {
                     return back()->with('error', 'Oops Something went wrong');
                 }
