@@ -11,6 +11,10 @@
             </div>
 
             <div class="form-body">
+                @if (session()->has('error'))
+                    <div class="text-danger">{{ session()->get('error') }}</div>
+                @endif
+
                 <form id="login" class="row g-3" method="post" action="{{ route('login') }}">
                     @csrf
 

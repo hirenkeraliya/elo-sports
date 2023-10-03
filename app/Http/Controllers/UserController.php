@@ -71,13 +71,10 @@ class UserController extends Controller
 
     public function loginaccount(Request $req)
     {
-
-
         $req->validate([
             'username' => 'required',
             'password' => 'required',
         ]);
-
 
         $credentials = [
             'username' => $req['username'],

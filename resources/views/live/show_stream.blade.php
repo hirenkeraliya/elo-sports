@@ -33,8 +33,8 @@
                     {{ isset($livestream) ? $livestream->name : '' }}
                 </h3>
 
-                <div class="section-authentication-signin1 d-flex align-items-center justify-content-center my-5 my-lg-0">
-                    <video id="player" class="video-js" controls autoplay preload="auto" width="1280" height="720" data-setup="{}">
+                <div class="section-authentication-signin1 d-flex align-items-center justify-content-center my-5 my-lg-0" style="width: 100%; height: 380px;">
+                    <video id="player" class="video-js" controls autoplay preload="auto" style="width: 100%; height: 380px;" data-setup="{}">
                         <source src=" {{ env('RMPT_STREAMING_LINK').'/'.$livestream->stream_id }}.m3u8" type="application/x-mpegURL" res="9999" label="auto" />
                         <p class="vjs-no-js">To view this video please enable JavaScript, and consider
                             upgrading to
@@ -1042,7 +1042,7 @@
                                     $('#elo_purchase').show();
                                 } else {
                                     alert(data['msg2']);
-                                    $('.bet_close_model').trigger("click");
+                                    $('#exampleModalCenter').modal('hide');
                                 }
                             }
                         });

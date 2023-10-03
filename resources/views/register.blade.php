@@ -10,6 +10,10 @@
             </p>
         </div>
 
+        @if (session()->has('error'))
+            <div class="text-danger">{{ session()->get('error') }}</div>
+        @endif
+
         <form id="register" action="{{ route('register') }}" method="post" class="row g-3" enctype="multipart/form-data">
             @csrf
 

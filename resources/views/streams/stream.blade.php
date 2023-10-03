@@ -750,7 +750,7 @@
                                 // $('#exampleModalCenter').modal('hide');
                                 //location.reload();
                                 // $('#elo_purchase').hide();
-                                $('.bet_close_model').trigger("click");
+                                $('#exampleModalCenter').modal('hide');
 
                             }
                         }
