@@ -165,7 +165,7 @@
                                                                     </select>
                                                                 </div>
 
-                                                                <div class="col-md-6 assign_room">
+                                                                <div class="col-md-6 assign_room mt-3">
                                                                     <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary mr-3 mt-3" value="Submit">
                                                                     <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary mt-3" value="Cancel">
                                                                 </div>
@@ -223,7 +223,7 @@
                                                                     </select>
                                                                 </div>
 
-                                                                <div class="col-md-6 assign_room">
+                                                                <div class="col-md-6 assign_room mt-3">
                                                                     <input type="submit" name="submit_change_room" id="submit_change_room" class="btn btn-sm btn-primary mr-3 mt-3" value="Submit">
                                                                     <input type="button" id="cancel_change_room" class="btn btn-sm btn-secondary mt-3" value="Cancel">
                                                                 </div>
@@ -304,7 +304,7 @@
                                                                         <option value="new">New Label</option>
                                                                     </select>
                                                                 </div>
-                                                                <div class="col-md-3">
+                                                                <div class="col-md-3 mt-3">
                                                                     <input type="hidden" name="game_id" value="{{$livestream->id}}">
                                                                     <input type="submit" class="btn btn-primary not_empty_label" name="submit_label" id="submit_label" value="Add Label">
                                                                 </div>
@@ -327,7 +327,7 @@
                                                                     </span>
                                                                 </div>
 
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-6 mt-3">
                                                                     <input type="submit" id="chk_label1" class="btn btn-primary btn-sm add_label  " name="submit_label" value="Add Label">
                                                                     <input type="button" class="btn btn-secondary btn-sm" name="cancel_label" id="cancel_label" value="Cancel">
                                                                 </div>
@@ -402,7 +402,7 @@
                                                                         </button>
                                                                     @else
                                                                         @if ($livestream->status != "stopped")
-                                                                            @if ($livestream->is_declared_result == 0 )
+                                                                            @if ($active_bet->is_declared_result == 0 )
                                                                                 @if ($active_bet->total<$setting->no_of_user_can_bet)
                                                                                     <button type="button" data-bet-type="{{$active_bet->master->description}}" data-betting_amount="{{ $active_bet->betting_amount }}" data-vig_amount="{{ $setting->vig}}" data-against_text="{{ $active_bet->against_text }}" data-for_text="{{ $active_bet->for_text }}" data-description="{{ $active_bet->description }}" data-id="{{ $active_bet->id }}" class="btn btn-primary bet_now_model">
                                                                                         Bet now
@@ -447,7 +447,7 @@
                     <p>
                         <label>Select Betting Amount</label>
                         <select name="betting_amount" id="betting_amount"
-                            class="empty_select btn btn-primary dropdown-toggle text-light form-control">
+                            class="empty_select btn btn-primary dropdown-toggle text-light form-control mt-1">
                             <option value="0" disabled>---</option>
                             @foreach ($betting_masters as $betting_master)
                                 <option value="{{$betting_master->id}}">{{$betting_master->betting_amount}}</option>

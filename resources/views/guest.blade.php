@@ -51,6 +51,8 @@
 				</section>
 			</div>
 		</div>
+
+		@include('footer')
 	</div>
 
 	<script src="{{ asset('assets/front/js/bootstrap.bundle.min.js') }}"></script>

@@ -67,7 +67,7 @@
 
 <section class="content">
     <div class="container-fluid">
-      
+
                             <div class="row">
                                 <div class="col-sm-12 col-md-8">
                                 </div>
@@ -80,11 +80,11 @@
                                             </div>
                                             <input type="text" class="form-control pull-right" id="reservation">
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-2">
-                                    
+
                                       </div>
                                     </div>
                      <div class="card card-widget">
@@ -103,9 +103,9 @@
                         @if($chat->file_type)
                         <a href="{{ url('storage/'.$chat->file) }}" class="download-btn" title="Download file"
                                         target="_blank">
-                                       <button class="btn-sm btn-success"> 
+                                       <button class="btn-sm btn-success">
                                         <i class="fa fa-arrow-down"></i>
-                                       
+
                                         </button>
                                     </a>
                         @else
@@ -135,25 +135,19 @@
 @endsection
 @section('js')
 <script>
-$('#reservation').daterangepicker()
+// $('#reservation').daterangepicker()
+$('#reservation').daterangepicker({
+    timePicker: true,
+})
 
 
 // attach daterangepicker plugin
 
     $(document).ready(function() {
         $('#reservation').on('apply.daterangepicker', function(ev, picker) {
-            console.log(picker.startDate.format('yyyy-mm-dd H:i:s'),picker.endDate.format('MMMM D, YYYY'));
-            var date = {
-                            
-                        start_date: picker.startDate.subtract(1,'days').format('MMMM D, YYYY')
-                            , end_date: picker.endDate.add(1,'days').format('MMMM D, YYYY')
-
-                        }
-            var url =baseUrl+'/chat-lists/?start_date='+picker.startDate.format('MMMM D, YYYY')+'&end_date='+picker.endDate.format('MMMM D, YYYY');
+            var url =baseUrl+'/chat-lists/?start_date='+picker.startDate.format('YYYY-MM-DD HH:mm:ss')+'&end_date='+picker.endDate.format('YYYY-MM-DD HH:mm:ss');
             $('#data-tables').DataTable().destroy();
             load_data(url);
-                
-            
         });
 
         {{-- $( window ).on( "load",function(){
@@ -172,10 +166,10 @@ $('#reservation').daterangepicker()
                     $('.card-comments').html(data.html)
                 }
             });
-      
+
    }
 
-     
+
 </script>
 
 @endsection
