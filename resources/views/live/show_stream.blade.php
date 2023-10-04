@@ -35,7 +35,7 @@
                     </h3>
 
                     <div class="section-authentication-signin1 d-flex align-items-center justify-content-center my-5 my-lg-0" style="width: 100%; height: 380px;">
-                        <video id="player" class="video-js" controls autoplay preload="auto" style="width: 100%; height: 380px;" data-setup="{}">
+                        <video id="player" class="video-js" controls autoplay muted preload="auto" style="width: 100%; height: 380px;" data-setup="{}">
                             <source src=" {{ env('RMPT_STREAMING_LINK').'/'.$livestream->stream_id }}.m3u8" type="application/x-mpegURL" res="9999" label="auto" />
                             <p class="vjs-no-js">To view this video please enable JavaScript, and consider
                                 upgrading to
@@ -457,7 +457,7 @@
                             </div>
 
                             <div class="row justify-content-center">
-                                <video id="player" class="video-js vjs-default-skin" controls autoplay preload="auto" width="1280" height="720" data-setup='{}' >
+                                <video id="player" class="video-js vjs-default-skin" controls autoplay muted preload="auto" width="1280" height="720" data-setup='{}' >
                                     <source src="{{ env('RMPT_STREAMING_URL').'/'.$livestream->id }}.mp4" type="video/mp4" res="9999" label="auto" />
                                     <p class="vjs-no-js">To view this video please enable JavaScript, and consider
                                         upgrading to
