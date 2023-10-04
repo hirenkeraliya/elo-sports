@@ -43,7 +43,7 @@ body {
 font-family: 'Ubuntu', sans-serif;
 }
 input::placeholder {
-	color: #fff!important;
+	color: #625353 !important
 	opacity: .3!important
 }
 a {
@@ -1526,22 +1526,127 @@ body.bg-theme15 {
 .mt-n12{margin-top:-14% !important;}
 .product-name{font-size:12px;}
 .modal.show .modal-dialog{width:95% !important;}
-.text-ellipsis1{white-space: nowrap;
- /* width: 50px; */
-  overflow: hidden;
-  text-overflow: ellipsis; }
+.text-ellipsis1{white-space: nowrap;   /* width: 50px; */  overflow: hidden;   text-overflow: ellipsis; }
 
-  .chat-btn {
-	position: fixed;
-    bottom: 70px;
-    right: 12px;
-    z-index: 99;
-    font-size: 18px;
-    border: none;
-    outline: none;
-    background-color: red;
-    color: white;
-    cursor: pointer;
-    padding: 15px;
-    border-radius: 4px;
-  }
+#submit_label{margin-top: 2%;}
+#add-avatar{margin-top:20%;}
+#shareModal{margin-top:20%;margin-left:25%;}
+.share-icon-pop{font-size:30px; backgroud-color:blue; padding1:20px;}
+@media only screen and (max-width: 600px) {
+  #shareModal{margin-top:70% !important;margin-left:0%!important;}
+  #add-avatar{margin-top:70% !important;}
+}
+/*chat*/
+
+/* Button used to open the chat form - fixed at the bottom of the page */
+.open-button {
+  padding:10px 40px;
+  background-color: red;
+  color: white;
+  font-size:17px;
+  max-width:300px;
+  border-radius:20px;
+  border: none;
+  cursor: pointer;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+}
+
+/* The popup chat - hidden by default */
+.chat-popup {
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  z-index: 9;
+
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 400px;
+  /*padding: 10px;*/
+  border-radius:20px;
+  background-color: white;
+  color:#777;
+}
+
+/* Full-width textarea */
+.form-container textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  border-radius:20px;
+  background: #ddd;
+  resize: none;
+  min-height: 200px;
+  color:#777;
+}
+
+/* When the textarea gets focus, do something */
+.form-container textarea:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/send button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+   font-size:17px;
+  padding: 10px 20px;
+  border: none;
+  border-radius:20px;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: #1974D2;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+opacity: 0.8;
+}
+
+
+
+#chat2 .form-control {
+border-color: transparent;
+}
+
+#chat2 .form-control:focus {
+border-color: transparent;
+box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.chat-btn {position: fixed; bottom:50px; align-self: flex-end; right: 10px; float:right;}
+.v3-input-emoji-picker .v3-input-picker-root .v3-emoji-picker-textarea+.v3-input-picker-wrap .v3-input-picker-icon {
+	background-color: unset !important;
+	padding: 0;
+	width: unset;
+	height: unset;
+	position: unset;
+}
+.v3-input-emoji-picker.ms-1.text-dark {
+	width: unset !important;
+	height: unset !important;
+}
+.v3-input-picker-wrap {
+	margin-top: 9px !important;
+    height: 10px !important;
+}
+.border-none {
+	border: unset !important;
+}
