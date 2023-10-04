@@ -1564,8 +1564,8 @@ body.bg-theme15 {
 
 /* Add styles to the form container */
 .form-container {
-  max-width: 400px;
-  /*padding: 10px;*/
+  max-width: 320px;
+  max-height: 380px;
   border-radius:20px;
   background-color: white;
   color:#777;
@@ -1649,4 +1649,7 @@ background: #eee;
 }
 .border-none {
 	border: unset !important;
+}
+.chat-input {
+	font-size: 14px;
 }

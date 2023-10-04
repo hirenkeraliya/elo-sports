@@ -72,7 +72,7 @@
         <div class="chat-popup" v-if="visibles">
             <div class="form-container card">
                 <div class="card-header d-flex justify-content-between align-items-center p-2">
-                    <a class="ms-3" href="#!">
+                    <a href="#!">
                         <i class="bx bx-window-close text-dark" @click="closeChat()" style="font-size: 20px;"></i>
                     </a>
 
@@ -97,6 +97,7 @@
 
                 <div
                     class="card-body"
+                    id="chat-box-container"
                     data-mdb-perfect-scrollbar="true"
     				style="position: relative; max-height: 500px; height:350px; overflow-y: scroll;"
                 >
@@ -237,7 +238,7 @@
                         v-if="add_image_btn"
                         v-model="text"
                         ref="chatInput"
-                        class="form-control form-control-lg border-none"
+                        class="form-control form-control-lg border-none chat-input"
                         placeholder="Type message"
                         @keydown.enter.prevent.stop="submit(e)"
                         @keydown.space="handleSpace"
@@ -496,8 +497,8 @@ export default {
 
                  vm.messages.forEach(item => {
                     item.isOpen = false;
-                });
-
+                 });
+                console.log(vm.dataImages);
                 vm.dataImages = response.data.images;
                 if (response.data.avatar) {
                     vm.avatar_image = response.data.avatar.avatar_image
@@ -516,6 +517,13 @@ export default {
             this.add_image_btn = true;
             this.visibles = true;
             this.open = false;
+
+            this.$nextTick(() => {
+                var chatBoxContainer = document.getElementById('chat-box-container')
+                if (chatBoxContainer) {
+                    chatBoxContainer.scrollTo(0, chatBoxContainer.scrollHeight);
+                }
+            });
         },
         closeChat() {
             this.visibles = false;
@@ -543,6 +551,13 @@ export default {
                 vm.visibles = true
                 vm.add_image_btn = true;
                 vm.open = false;
+
+                vm.$nextTick(() => {
+                    var chatBoxContainer = document.getElementById('chat-box-container')
+                    if (chatBoxContainer) {
+                        chatBoxContainer.scrollTo(0, chatBoxContainer.scrollHeight);
+                    }
+                });
             }, (error) => {
                 vm.avatar_image_view = vm.old_avatar_image;
                 alert('please select or upload the image ');
@@ -595,7 +610,14 @@ export default {
                 this.getUserLivestrea(this.livestream.id);
                 $(".v3-emoji-picker-textarea").text('');
                 $(".v3-emoji-picker-textarea").html('');
-                $('.v3-emoji-picker-textarea').val('').change();
+                    $('.v3-emoji-picker-textarea').val('').change();
+
+                vm.$nextTick(() => {
+                    var chatBoxContainer = document.getElementById('chat-box-container')
+                    if (chatBoxContainer) {
+                        chatBoxContainer.scrollTo(0, chatBoxContainer.scrollHeight);
+                    }
+                });
 
             }).catch(error => {
 
@@ -667,6 +689,13 @@ export default {
             this.visibles = true;
             this.visibles_avatar = false;
             this.open = true;
+
+            this.$nextTick(() => {
+                var chatBoxContainer = document.getElementById('chat-box-container')
+                if (chatBoxContainer) {
+                    chatBoxContainer.scrollTo(0, chatBoxContainer.scrollHeight);
+                }
+            });
         },
         selectImage(el) {
             var vm = this;
